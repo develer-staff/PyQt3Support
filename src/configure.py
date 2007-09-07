@@ -2,15 +2,22 @@
 #
 # Copyright (c) 2007
 # 	Riverbank Computing Limited <info@riverbankcomputing.co.uk>
-#
+# 
 # This file is part of PyQt.
-#
-# This copy of PyQt is licensed for use under the terms of the PyQt
-# Commercial License Agreement version 3.1.  See the file LICENSE for more
+# 
+# This copy of PyQt is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 2 as published by
+# the Free Software Foundation and appearing in the file LICENSE included in the
+# packaging of this file.
+# 
+# PyQt is supplied in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
 # details.
-#
-# PyQt is supplied WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# 
+# You should have received a copy of the GNU General Public License along with
+# PyQt; see the file LICENSE.  If not, write to the Free Software Foundation,
+# Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 
 import sys
@@ -25,7 +32,7 @@ import sipconfig
 
 # Initialise the globals.
 pyqt_version = 0x040300
-pyqt_version_str = "4.3-snapshot-20070807"
+pyqt_version_str = "4.3"
 
 sip_min_version = 0x040700
 
@@ -80,7 +87,7 @@ def find_default_qmake():
 
     for d in path.split(os.pathsep):
         qmake = os.path.join(d, base_qmake)
-
+  
         if os.access(qmake, os.X_OK):
             return qmake
 
@@ -99,7 +106,7 @@ def create_optparser():
         if not os.path.isdir(value):
             raise optparse.OptionValueError("'%s' is not a directory" % value)
         setattr(parser.values, option.dest, os.path.abspath(value))
-
+        
     def store_abspath_file(option, opt_str, value, parser):
         if not os.path.isfile(value):
             raise optparse.OptionValueError("'%s' is not a file" % value)
@@ -1368,7 +1375,7 @@ def check_license():
     print "Type 'no' to decline the terms of the license."
     print
 
-    while 0: # LOCAL: Salta la domanda sulla licenza
+    while 1:
         try:
             resp = raw_input("Do you accept the terms of the license? ")
         except KeyboardInterrupt:
@@ -1825,7 +1832,7 @@ def main(argv):
     if opts.qscidir:
         # An explicit directory implies installing the API file.
         opts.api = True
-    elif opts.api: # LOCAL: Installa le api nella dir di default solo se richiesto
+    elif opts.api: # LOCAL: Installs the apis in the default dir only if requested
         opts.qscidir = os.path.join(qt_datadir, "qsci")
 
         if opts.api is None:
@@ -1883,7 +1890,7 @@ def main(argv):
 
     sipconfig.ParentMakefile(
         configuration=sipcfg,
-        subdirs=pyqt.qpylibs() + pyqt_modules + xtra_modules,# + pyqt.tools(),
+        subdirs=pyqt.qpylibs() + pyqt_modules + xtra_modules, + pyqt.tools(),
         installs=installs
     ).generate()
 
