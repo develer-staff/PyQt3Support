@@ -41,11 +41,12 @@ import shutil
 import stat
 import sys
 import subprocess
-import os
+import os, os.path
 
 pyqt3dir = r"../PyQt-x11-gpl-3.17.3/"
 pyqt4dir = r"../PyQt-x11-gpl-4.3/"
-destdir = r"../PyQt3Support/"
+destbase = r"../PyQt3Support/"
+destdir = destbase + "sip/Qt3Support/"
 
 modulename = "Qt3Supportmod.sip"
 
@@ -216,7 +217,7 @@ class SipFilters:
 	};
 	Q3IconViewItem *findItem(const QString &,""")
         elif "mainwindow.sip" in filename:
-            classgraph = SipMerge.readtext(filename.replace("mainwindow", "classgraph")+".in")
+            classgraph = SipMerge.readtext("q3classgraph.sip.in")
             line = line.replace("public:", classgraph+"\n\npublic:", 1)
         return line
 
@@ -499,16 +500,22 @@ def process(filename, line, c):
         print line,
 
 if __name__ == "__main__":
+    os.chdir(os.path.abspath(os.path.dirname(__file__)))
+    print "Mirroring the PyQt4 tree..."
+    if not os.path.exists(destbase):
+        shutil.copytree(pyqt4dir, destbase)
+    else:
+        print "PyQt3Support tree is present, remove it manually if needed."
+    shutil.rmtree(destdir, ignore_errors=True)
+    os.makedirs(destdir)
     print "Moving qt3 sip files..."
-    for filename in glob.glob(destdir+"*.sip"):
-        os.remove(filename)
     for qclassref in q3classes:
         qdir, qclass = qclassref.split("/")
         destfilename = destdir + "q3%s.sip" % qclass.lower()
-        shutil.copy(pyqt3dir + "/%s/q%s.sip" % (qdir, qclass.lower()), destfilename)
+        shutil.copy(pyqt3dir + "sip/%s/q%s.sip" % (qdir, qclass.lower()), destfilename)
         os.chmod(destfilename, stat.S_IREAD + stat.S_IWRITE)
         SipMerge.merge_cleanup2CompatibilityCode(destfilename, destfilename)
-    shutil.copy(destdir + modulename + ".in", destdir + modulename)
+    shutil.copy(modulename + ".in", destdir + modulename)
     files = glob.glob(destdir + "*.sip")
     print "Processing %d files..." % len(files)
     if os.path.exists("portinglog.txt"):
@@ -523,31 +530,35 @@ if __name__ == "__main__":
     methods = []
     mods = []
     for qclass in q4classes:
-        orig3 = pyqt3dir + "qt/q%s.sip" % qclass.split("/")[1].lower()
-        orig4 = pyqt4dir + "Qt%s/q%s.sip" % (qclass.split("/")[0], qclass.split("/")[1].lower())
-        mod4 = pyqt4dir + "Qt%s/Qt%smod.sip" % (qclass.split("/")[0], qclass.split("/")[0])
-        dest = orig4.replace("/sip.orig/", "/sip/")
+        orig3 = pyqt3dir + "sip/qt/q%s.sip" % qclass.split("/")[1].lower()
+        orig4 = pyqt4dir + "sip/Qt%s/q%s.sip" % (qclass.split("/")[0], qclass.split("/")[1].lower())
+        mod4 = destbase + "sip/Qt%s/Qt%smod.sip" % (qclass.split("/")[0], qclass.split("/")[0])
+        dest = orig4.replace(pyqt4dir, destbase)
         if qclass.split("/")[0] not in mods:
             print "--->", qclass.split("/")[0],
-            for filename in glob.glob(pyqt4dir + "Qt%s/*.sip" % qclass.split("/")[0]):
-                shutil.copy2(filename, filename.replace("/sip.orig/", "/sip/"))
+            for filename in glob.glob(pyqt4dir + "sip/Qt%s/*.sip" % qclass.split("/")[0]):
+                dest_filename = filename.replace(pyqt4dir, destbase)
+                dest_path = os.path.dirname(dest_filename)
+                if not os.path.exists(dest_path):
+                    os.makedirs(dest_path)
+                shutil.copy2(filename, dest_filename)
                 sys.stdout.write(".")
             print "!"
             mods.append(qclass.split("/")[0])
             print mod4
             if "Core" in mod4:
-                SipMerge.add_features(mod4.replace("/sip.orig/", "/sip/"))
+                SipMerge.add_features(mod4.replace(pyqt4dir, destbase))
             elif "Gui" in mod4:
-                SipMerge.add_includes(mod4.replace("/sip.orig/", "/sip/"))
+                SipMerge.add_includes(mod4.replace(pyqt4dir, destbase))
         print "--->", qclass
         if "Layout" in qclass:
-            orig3 = pyqt3dir + "qt/qlayout.sip"
+            orig3 = pyqt3dir + "sip/qt/qlayout.sip"
         elif qclass == "OpenGL/GLWidget":
             orig3 = orig3.replace("qt/qglwidget.sip","qtgl/qgl.sip")
             orig4 = orig4.replace("qglwidget.sip","qgl.sip")
             dest = dest.replace("qglwidget.sip","qgl.sip")
         elif qclass in ["Gui/Menu", "Gui/MenuBar"]:
-            orig3 = pyqt3dir + "qt/qmenudata.sip"
+            orig3 = pyqt3dir + "sip/qt/qmenudata.sip"
         shutil.copy(orig4, dest)
         if qclass not in ["Gui/Layout", "Gui/Pixmap"]:
             constructors.append((orig3, dest, qclass.split("/")[1]))
@@ -556,3 +567,5 @@ if __name__ == "__main__":
                 methods.append((orig3, dest, item[0], item[1]))
     [SipMerge.merge_qt3supportConstructor(*filedata) for filedata in constructors]
     [SipMerge.merge_qt3supportStuff(*filedata) for filedata in methods]
+    print "Copying modified configure.py..."
+    shutil.copy("configure.py", destbase + "configure.py")
