@@ -1,0 +1,44 @@
+%ConvertToSubClassCode
+    static struct class_graph {
+            char *name;
+            sipWrapperType **type;
+            int yes, no;
+        } graph[] = {
+            {sipName_Q3Header,	&sipClass_Q3Header,	-1, 1},
+            {sipName_Q3Accel,	&sipClass_Q3Accel,	-1, 2},
+            {sipName_Q3Action,	&sipClass_Q3Action,	3, 4},
+                {sipName_Q3ActionGroup,	&sipClass_Q3ActionGroup,    -1, -1},
+            {sipName_Q3DockArea,	&sipClass_Q3DockArea,	-1, 5},
+            {sipName_Q3Frame,	&sipClass_Q3Frame,  6, 15},
+                {sipName_Q3DockWindow,	&sipClass_Q3DockWindow,  7, 8},
+                    {sipName_Q3ToolBar,	&sipClass_Q3ToolBar,  -1, -1},
+                {sipName_Q3Grid,	&sipClass_Q3Grid,  -1, 9},
+                {sipName_Q3HBox,	&sipClass_Q3HBox,  10, 11},
+                    {sipName_Q3VBox,	&sipClass_Q3VBox,  -1, -1},
+                {sipName_Q3ScrollView,	&sipClass_Q3ScrollView,  12, 15},
+                    {sipName_Q3ListView,	&sipClass_Q3ListView,  -1, 13},
+                    {sipName_Q3Table,	&sipClass_Q3Table,  -1, 14},
+                    {sipName_Q3ListBox,	&sipClass_Q3ListBox,  -1, 15},
+            {sipName_Q3MainWindow,	&sipClass_Q3MainWindow, -1, 16},
+            {sipName_Q3PopupMenu,	&sipClass_Q3PopupMenu, -1, 17},
+            {sipName_Q3StyleSheet,	&sipClass_Q3StyleSheet, -1, -1},
+        };
+    
+        int i = 0;
+    
+        sipClass = NULL;
+    
+        do
+        {
+            struct class_graph *cg = &graph[i];
+    
+            if (cg->name != NULL && sipCpp->inherits(cg->name))
+            {
+                sipClass = *cg->type;
+                i = cg->yes;
+            }
+            else
+                i = cg->no;
+        }
+        while (i >= 0);
+%End
