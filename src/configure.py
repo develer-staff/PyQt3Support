@@ -1168,7 +1168,7 @@ def mk_clean_dir(name):
     try:
         os.mkdir(name)
     except:
-        sipconfig.inform("Unable to create the %s directory." % name) # LOCAL: rmtree a volte fallisce
+        sipconfig.inform("Unable to create the %s directory." % name)
 
 
 def generate_code(mname, extra_include_dirs=None, extra_lib_dirs=None, extra_libs=None, extra_sip_flags=None):
