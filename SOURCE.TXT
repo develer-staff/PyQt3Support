@@ -1,0 +1,9 @@
+Once unpacked this package, execute
+
+$ src/makedist.sh
+
+It will
+
+ * Download PyQt3 and PyQt4 sources and unpack them
+ * Run the q3sipconvert.py script (merge and patch)
+ * Build the two ''full'' and ''addon'' packages.
