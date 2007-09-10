@@ -1890,7 +1890,7 @@ def main(argv):
 
     sipconfig.ParentMakefile(
         configuration=sipcfg,
-        subdirs=pyqt.qpylibs() + pyqt_modules + xtra_modules, + pyqt.tools(),
+        subdirs=pyqt.qpylibs() + pyqt_modules + xtra_modules + pyqt.tools(),
         installs=installs
     ).generate()
 
