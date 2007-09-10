@@ -1,12 +1,26 @@
 #!/bin/bash
 
-echo "Preparing the distribution packages"
-
 VER=0.3
 PYQT4VER=4.3
 PYQT3VER=3.17.3
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
 PYQT3DIR=PyQt-x11-gpl-${PYQT3VER}
+
+echo "=========================================================="
+echo "Preparing the distribution packages"
+echo "=========================================================="
+
+
+echo "----------------------------------------------------------"
+echo "Downloading PyQt4 ad PyQt3 sources..."
+echo "----------------------------------------------------------"
+
+wget -c http://www.riverbankcomputing.com/Downloads/PyQt4/GPL/${PYQT4DIR}.tar.gz
+tar xvf ${PYQT4DIR}.tar.gz
+
+wget -c http://www.riverbankcomputing.com/Downloads/PyQt3/GPL/${PYQT3DIR}.tar.gz
+tar xvf ${PYQT3DIR}.tar.gz
+
 
 echo "----------------------------------------------------------"
 echo "Building the full package..."
