@@ -16,9 +16,11 @@ echo "Downloading PyQt4 ad PyQt3 sources..."
 echo "----------------------------------------------------------"
 
 wget -c http://www.riverbankcomputing.com/Downloads/PyQt4/GPL/${PYQT4DIR}.tar.gz
+# TODO: expand only if needed
 tar xvf ${PYQT4DIR}.tar.gz
 
 wget -c http://www.riverbankcomputing.com/Downloads/PyQt3/GPL/${PYQT3DIR}.tar.gz
+# TODO: expand only if needed
 tar xvf ${PYQT3DIR}.tar.gz
 
 
@@ -68,4 +70,17 @@ echo "Building ${ADESTDIR}.tar.gz package..."
 rm -rf ${ADESTDIR}.tar.gz
 tar -cf ${ADESTDIR}.tar $ADESTDIR
 gzip ${ADESTDIR}.tar
+
+
+echo "----------------------------------------------------------"
+echo "Building the source package..."
+echo "----------------------------------------------------------"
+
+rm -rf /tmp/PyQt3Support_sdk_${VER}
+hg clone ./ /tmp/PyQt3Support_sdk_${VER}
+pushd /tmp
+tar -cvvf PyQt3Support_sdk_${VER}.tar PyQt3Support_sdk_${VER}
+gzip PyQt3Support_sdk_${VER}.tar
+popd
+mv /tmp/PyQt3Support_sdk_${VER}.tar.gz ./
 
