@@ -2,8 +2,27 @@ Once unpacked this package, execute
 
 $ src/makedist.sh
 
-It will
+It will:
 
  * Download PyQt3 and PyQt4 sources and unpack them
- * Run the q3sipconvert.py script (merge and patch)
+
+ * Run the q3sipconvert.py script, this scipt will:
+
+  * create a Qt3Support module containing the PyQt3 ported classes:
+    Q3VBox, Q3HBox, Q3Frame, Q3Grid, Q3Accel, Q3PopupMenu, Q3MenuData,
+    Q3DockWindow, Q3DockArea, Q3ListView, Q3ScrollView, Q3ColorGroup,
+    Q3Header, Q3ListBox, Q3StrList, Q3Table, Q3MemArray, Q3MainWindow,
+    Q3ToolBar, Q3Action, Q3SimpleRichText, Q3StyleSheet, Q3Mime, Q3ComboBox,
+    Q3GroupBox, Q3FileDialog, Q3Url, Q3WidgetStack, Q3HGroupBox, Q3VGroupBox,
+    Q3IconView, Q3DragObject, Q3Picture, Q3ValueList, Q3CString,
+    Q3ButtonGroup, Q3VButtonGroup
+
+  * add the some methods to PyQt4 qt3supported classes:
+    Gui.QBoxLayout, Core.QNamespace, Gui.QLCDNumber, Gui.QGridLayout,
+    Gui.QApplication, Gui.QPushButton, OpenGL.QGLWidget, Core.QObject,
+    Gui.QLabel, Gui.QPixmap, Core.QTextCodec, Gui.QToolButton, Gui.QTabWidget,
+    Gui.QMenu, Core.QTimer, Gui.QLayout, Gui.QPalette, Gui.QMenuBar,
+    Gui.QLineEdit, Gui.QDialog, Gui.QInputDialog, Gui.QCheckBox,
+    Gui.QWidget, Gui.QTextEdit, Gui.QEvent, Gui.QSlider
+
  * Build the two ''full'' and ''addon'' packages.
