@@ -508,6 +508,17 @@ def process(filename, line, c, comment_lines={}):
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
+
+    if '--info' in sys.argv:
+        report = {'Qt4': [], 'Qt3': []}
+        for qclass in q3classes:
+            report['Qt3'].append("Q3%s" % qclass.split("/")[1])
+        for qclass in q4classes:
+            report['Qt4'].append("%s.Q%s" % tuple(qclass.split("/")))
+        print "PyQt3 ported classes:\n%s" % ", ".join(report['Qt3'])
+        print "PyQt4 qt3supported classes:\n%s" % ", ".join(report['Qt4'])
+        sys.exit(0)
+
     print "Mirroring the PyQt4 tree..."
     if not os.path.exists(destbase):
         shutil.copytree(pyqt4base, destbase)
