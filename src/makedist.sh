@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER=0.3
+VER=r3
 PYQT4VER=4.3
 PYQT3VER=3.17.3
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
@@ -27,7 +27,7 @@ tar xvf ${PYQT3DIR}.tar.gz
 echo "----------------------------------------------------------"
 echo "Building the full package..."
 echo "----------------------------------------------------------"
-FDESTDIR=PyQt3Support${PYQT4VER}_PyQt${PYQT3VER}_full${VER}
+FDESTDIR=PyQt3Support_PyQt${PYQT4VER}_GPL_${VER}
 
 rm -rf $FDESTDIR
 
@@ -49,28 +49,16 @@ gzip ${FDESTDIR}.tar
 echo "----------------------------------------------------------"
 echo "Building the addon package..."
 echo "----------------------------------------------------------"
-ADESTDIR=PyQt3Support${PYQT4VER}_PyQt${PYQT3VER}_addon${VER}
+PDESTNAME=PyQt3Support_PyQt${PYQT4VER}_GPL_${VER}.patch
 
-rm -rf $ADESTDIR
-mkdir $ADESTDIR
-mkdir $ADESTDIR/sip
-
-echo "Copying Qt3Support sip files..."
-cp -r $FDESTDIR/sip/Qt3Support $ADESTDIR/sip
-
-cp README.TXT $ADESTDIR
+rm -f $PDESTNAME
+cp README.TXT $PDESTNAME
 
 echo "Diffing common files..."
-cd $PYQT4DIR
-diff -urN -x Qt3Support ./sip ../$FDESTDIR/sip > ../$ADESTDIR/qt3support.patch
-diff -uN ./configure.py ../$FDESTDIR/configure.py >> ../$ADESTDIR/qt3support.patch
-cd ..
-
-echo "Building ${ADESTDIR}.tar.gz package..."
-rm -rf ${ADESTDIR}.tar.gz
-tar -cf ${ADESTDIR}.tar $ADESTDIR
-gzip ${ADESTDIR}.tar
-
+pushd $PYQT4DIR
+diff -urN ./sip ../$FDESTDIR/sip >> ../$PDESTNAME
+diff -uN ./configure.py ../$FDESTDIR/configure.py >> ../$PDESTNAME
+popd
 
 echo "----------------------------------------------------------"
 echo "Building the source package..."
