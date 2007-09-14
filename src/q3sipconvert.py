@@ -25,7 +25,7 @@
 #
 
 """
-This script is a converter/merger that uses the sip file form the PyQt3
+This script is a converter/merger that uses the sip files form the PyQt3
 sources, modifies them and places them in a PyQt4 sources tree using the
 Qt3Support module.
 
@@ -509,6 +509,7 @@ def process(filename, line, c, comment_lines={}):
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
+    # Prints out the effected classes
     if '--info' in sys.argv:
         report = {'Qt4': [], 'Qt3': []}
         for qclass in q3classes:
