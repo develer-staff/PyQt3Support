@@ -1,6 +1,8 @@
 #!/bin/bash
 
-VER=r4-pre
+VER=r2-pre
+SDK=0.4-pre
+
 PYQT4VER=4.3
 PYQT3VER=3.17.3
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
@@ -61,11 +63,11 @@ echo "----------------------------------------------------------"
 echo "Building the source package..."
 echo "----------------------------------------------------------"
 
-rm -rf /tmp/PyQt3Support_sdk_${VER}
-hg clone ./ /tmp/PyQt3Support_sdk_${VER}
+rm -rf /tmp/PyQt3Support_sdk_${SDK}
+hg clone ./ /tmp/PyQt3Support_sdk_${SDK}
 pushd /tmp
-tar -cvvf PyQt3Support_sdk_${VER}.tar PyQt3Support_sdk_${VER}
-gzip PyQt3Support_sdk_${VER}.tar
+tar -cvvf PyQt3Support_sdk_${SDK}.tar PyQt3Support_sdk_${SDK}
+gzip PyQt3Support_sdk_${SDK}.tar
 popd
-mv /tmp/PyQt3Support_sdk_${VER}.tar.gz ./
+mv /tmp/PyQt3Support_sdk_${SDK}.tar.gz ./
 
