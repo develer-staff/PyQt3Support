@@ -3,10 +3,12 @@
 VER=r2-pre
 SDK=0.4-pre
 
-PYQT4VER=4.3
+PYQT4VER=4.3.1
 PYQT3VER=3.17.3
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
 PYQT3DIR=PyQt-x11-gpl-${PYQT3VER}
+
+cd ../$(dirname $0)
 
 echo "=========================================================="
 echo "Preparing the distribution packages"
@@ -31,7 +33,7 @@ FDESTDIR=PyQt3Support_PyQt${PYQT4VER}_GPL_${VER}
 rm -rf $FDESTDIR
 
 echo "Patching PyQt4 sources..."
-src/q3sipconvert.py
+src/q3sipconvert.py ${PYQT3DIR} ${PYQT4DIR}
 
 echo "Copying PyQt3Support sources in $FDESTDIR"
 mv PyQt3Support $FDESTDIR

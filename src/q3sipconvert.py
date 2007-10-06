@@ -43,8 +43,8 @@ import sys
 import subprocess
 import os, os.path
 
-pyqt3base = r"../PyQt-x11-gpl-3.17.3/"
-pyqt4base = r"../PyQt-x11-gpl-4.3/"
+#pyqt3base = r"../PyQt-x11-gpl-3.17.3/"
+#pyqt4base = r"../PyQt-x11-gpl-4.3.1/"
 destbase = r"../PyQt3Support/"
 destdir = destbase + "sip/Qt3Support/"
 
@@ -508,9 +508,13 @@ def process(filename, line, c, comment_lines={}):
 
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
+    from optparse import OptionParser
+    usage = "usage: %prog pyqt3dir pyqt4dir" 
+    parser = OptionParser(usage=usage)
+    (opts, args) = parser.parse_args()
 
     # Prints out the effected classes
-    if '--info' in sys.argv:
+    if len(args) < 2:
         report = {'Qt4': [], 'Qt3': []}
         for qclass in q3classes:
             report['Qt3'].append("Q3%s" % qclass.split("/")[1])
@@ -519,6 +523,14 @@ if __name__ == "__main__":
         print "PyQt3 ported classes:\n%s" % ", ".join(report['Qt3'])
         print "PyQt4 qt3supported classes:\n%s" % ", ".join(report['Qt4'])
         sys.exit(0)
+    elif len(args) == 2:
+        pyqt3base = args[0]
+        pyqt4base = args[1]
+        for base in args:
+            if not os.path.exists(base):
+                parser.error("%s dir missing!" % base)
+    else:
+        parser.error("Provide only two arguments!")
 
     print "Mirroring the PyQt4 tree..."
     if not os.path.exists(destbase):
