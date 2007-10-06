@@ -44,7 +44,7 @@ import subprocess
 import os, os.path
 
 pyqt3base = r"../PyQt-x11-gpl-3.17.3/"
-pyqt4base = r"../PyQt-x11-gpl-4.3/"
+pyqt4base = r"../PyQt-x11-gpl-4.3.1/"
 destbase = r"../PyQt3Support/"
 destdir = destbase + "sip/Qt3Support/"
 
