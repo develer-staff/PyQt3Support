@@ -19,10 +19,10 @@ echo "Downloading PyQt4 ad PyQt3 sources..."
 echo "----------------------------------------------------------"
 
 wget -c http://www.riverbankcomputing.com/Downloads/PyQt4/GPL/${PYQT4DIR}.tar.gz
-[ ! -d ${PYQT4DIR} ] && tar xvf ${PYQT4DIR}.tar.gz
+[ ! -d ${PYQT4DIR} ] && tar zxvf ${PYQT4DIR}.tar.gz
 
 wget -c http://www.riverbankcomputing.com/Downloads/PyQt3/GPL/${PYQT3DIR}.tar.gz
-[ ! -d ${PYQT3DIR} ] && tar xvf ${PYQT3DIR}.tar.gz
+[ ! -d ${PYQT3DIR} ] && tar zxvf ${PYQT3DIR}.tar.gz
 
 
 echo "----------------------------------------------------------"
