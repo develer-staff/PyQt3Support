@@ -524,10 +524,10 @@ if __name__ == "__main__":
         print "PyQt4 qt3supported classes:\n%s" % ", ".join(report['Qt4'])
         sys.exit(0)
     elif len(args) == 2:
-        pyqt3base = args[0]
-        pyqt4base = args[1]
-        for base in args:
-            if not os.path.exists(base):
+        pyqt3base = "../%s/" % args[0]
+        pyqt4base = "../%s/" % args[1]
+        for base in (pyqt3base, pyqt4base):
+            if not os.path.isdir(base):
                 parser.error("%s dir missing!" % base)
     else:
         parser.error("Provide only two arguments!")
