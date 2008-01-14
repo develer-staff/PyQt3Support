@@ -25,7 +25,7 @@
 #
 
 """
-This script is a converter/merger that uses the sip files form the PyQt3
+This script is a converter/merger that uses the sip files from the PyQt3
 sources, modifies them and places them in a PyQt4 sources tree using the
 Qt3Support module.
 
