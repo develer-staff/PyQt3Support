@@ -8,7 +8,7 @@ PYQT3VER=3.17.3
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
 PYQT3DIR=PyQt-x11-gpl-${PYQT3VER}
 
-cd $(dirname $0a) && cd ..
+cd $(dirname $0) && cd ..
 
 echo "=========================================================="
 echo "Preparing the distribution packages"
