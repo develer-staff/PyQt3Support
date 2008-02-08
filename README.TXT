@@ -56,14 +56,14 @@ license.
 !PyQt3Support. You can basically use this package instead of your PyQt4
 pakage.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r1.tar.gz PyQt3Support_PyQt4.3_GPL_r1.tar.gz]
+[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r2.tar.gz PyQt3Support_PyQt4.3_GPL_r2.tar.gz]
 
  * The patch to be applied to a !PyQt4 release to add !PyQt3Support.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r1.patch PyQt3Support_PyQt4.3_GPL_r1.patch]
+[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r2.patch PyQt3Support_PyQt4.3_GPL_r2.patch]
 
 Both these packages were produced running the automated script against
-!PyQt4 4.3 and !PyQt3 3.17.3.
+!PyQt4 4.3.3 and !PyQt3 3.17.4.
 
 If you have a commercial license and you are ''very'' anal, you probably
 want to run the script yourself against your own commercial copies of the
@@ -72,9 +72,10 @@ exactly the same.
 
 == Status ==
 
-!PyQt3Support is not complete: it binds about 30% of the !PyQt3Support, but
+!PyQt3Support is not complete: it binds about 30% of the !Qt3Support, but
 don't be fooled by this figure: it's the part that is probably used most in
-existing programs (more common widgets, constructors, ecc.).
+existing programs (more common widgets, constructors, ecc.). A full list is
+available here: PyQt3Support/StatusList.
 
 Moreover, since it is fully machine-generated, it is very easy to extend it
 to cover more classes and functions. See below as per how to contribute to
@@ -82,16 +83,16 @@ the development.
 
 == Support ==
 
-For support queries, mail us at pyqt3support@develer.com.
+If you have any question about PyQt3Support, mail us at pyqt3support@develer.com.
 
-Commercial support is also available through our employer
+For professionals, commercial support is also available through our employer
 ([http://www.develer.com Develer Srl]); for example: full !PyQt3 to !PyQt4
 porting service. Mail us for pricing information.
 
 
 == Author ==
 
-Matteo Bertini <naufraghi-nospam@develer.com>
+Matteo Bertini <naufraghi@develer.com>
 
 
 == Development ==
@@ -100,7 +101,16 @@ If you want to send patches or further develop this module,
 you can download the script package (a mercurial working copy)
 and start reading `SOURCES.TXT`:
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.3.tar.gz PyQt3Support_sdk_0.3.tar.gz]
+[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.4.tar.gz PyQt3Support_sdk_0.4.tar.gz]
 
 If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
+Or use:
+{{{
+hg clone static-http://www.develer.com/~naufraghi/PyQt3Support/hg PyQt3Support.hg
+}}}
+
+
+== Thanks ==
+
+Damon !McCormick (code cleanup and fixes)
