@@ -159,7 +159,8 @@ class SipFilters:
     @staticmethod
     def filter_expandMacros(line, c=None, filename=""):
         features = """Qt_TRANSFORMATIONS Qt_ACTION Qt_DRAGANDDROP Qt_TABLE
-                      Qt_TABLEVIEW Qt_FILEDIALOG Qt_ICONVIEW Qt_PICTURE""".split()
+                      Qt_TABLEVIEW Qt_FILEDIALOG Qt_ICONVIEW Qt_PICTURE
+                      Qt_SIP_PRE_4_7_2""".split()
         line = line.replace(
             "%%Features%%",
             "%Feature " + "\n%Feature ".join(features)
