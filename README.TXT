@@ -56,11 +56,11 @@ license.
 !PyQt3Support. You can basically use this package instead of your PyQt4
 pakage.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r2.tar.gz PyQt3Support_PyQt4.3_GPL_r2.tar.gz]
+[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz]
 
  * The patch to be applied to a !PyQt4 release to add !PyQt3Support.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3_GPL_r2.patch PyQt3Support_PyQt4.3_GPL_r2.patch]
+[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.patch PyQt3Support_PyQt4.3.3_GPL_r2.patch]
 
 Both these packages were produced running the automated script against
 !PyQt4 4.3.3 and !PyQt3 3.17.4.
