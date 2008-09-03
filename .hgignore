@@ -2,3 +2,4 @@ syntax: glob
 
 PyQt-x11-gpl*
 PyQt3Support*
+package
