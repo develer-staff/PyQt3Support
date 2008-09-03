@@ -1,0 +1,52 @@
+--- configure.py	2008-08-08 16:09:58.000000000 +0200
++++ ../PyQt3Support/configure.py_modified	2008-09-02 11:39:21.000000000 +0200
+@@ -298,6 +298,8 @@
+         check_module("QtXml", "qdom.h", "new QDomDocument()")
+         check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
+         check_module("phonon", "phonon", "new Phonon::VideoWidget()")
++        check_module("Qt3Support", "q3painter.h", "new Q3Painter()")
++
+         check_module("QtAssistant", "qassistantclient.h",
+                 "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
+                 extra_libs=ass_libs)
+@@ -421,6 +423,9 @@
+         if "QAxContainer" in pyqt_modules:
+             generate_code("QAxContainer")
+ 
++        if "Qt3Support" in pyqt_modules:
++            generate_code("Qt3Support")
++
+         # Generate the composite module.
+         qtmod_sipdir = os.path.join("sip", "Qt")
+         mk_clean_dir(qtmod_sipdir)
+@@ -1183,6 +1188,11 @@
+     # yet so we make sure we avoid the problem by always releasing the GIL.
+     qt_sip_flags.append("-g")
+ 
++    # If the module is disabled, disable also the feature, so that qt3 support
++    # functions in other modules are compiled out.
++    if "Qt3Support" not in pyqt_modules:
++        qt_sip_flags.append("-x")
++        qt_sip_flags.append("Qt_QT3SUPPORT")
+ 
+ def needed_qt_libs(mname, qt_libs):
+     """Add any additional Qt libraries needed by a module to an existing list.
+@@ -1210,6 +1220,7 @@
+         "phonon": ["QtGui"],
+         "QtAssistant": ["QtNetwork", "QtGui"],
+         "QtDesigner": ["QtGui"],
++        "Qt3Support": ["QtNetwork", "QtSql", "QtXml"],
+         "QAxContainer": ["QtGui"]
+     }
+ 
+@@ -1350,6 +1361,10 @@
+     )
+ 
+     add_makefile_extras(makefile, extra_include_dirs, extra_lib_dirs, extra_libs)
++    
++    if "Qt3Support" in pyqt_modules:
++        sipconfig.inform("QT3_SUPPORT defined for the %s module." % mname)
++        makefile.extra_defines.append("QT3_SUPPORT")
+ 
+     makefile.generate()
+ 

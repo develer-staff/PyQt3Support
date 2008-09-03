@@ -599,5 +599,3 @@ if __name__ == "__main__":
                 methods.append((orig3, dest, item[0], item[1]))
     [SipMerge.merge_qt3supportConstructor(*filedata) for filedata in constructors]
     [SipMerge.merge_qt3supportStuff(*filedata) for filedata in methods]
-    print "Copying modified configure.py..."
-    shutil.copy("configure.py", destbase + "configure.py")
