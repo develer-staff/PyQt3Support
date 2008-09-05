@@ -387,6 +387,8 @@ class SipMerge:
                             "QGridLayout(int")
         line = line.replace("Layout(int = -1",
                             "Layout(int")
+        if "}" not in line and "typedef" not in line:
+            line = line.replace(";", " / Deprecated / ;")
         return line
 
     @staticmethod
@@ -475,6 +477,25 @@ class QMenuBar : QWidget""")
         SipMerge.writetext(qt4filename, qt3text)
 
     @staticmethod
+    def merge_addDeprecatedTag(filename):
+        file = open(filename, 'r')
+        text = file.read()
+        file.close()
+        print text
+        constructor_expr = re.compile('Q3[A-Z][a-zA-Z]*\([^\)]*\);')
+        constructors = constructor_expr.findall(text)
+        if not constructors:
+            print 'Pattern not found'
+        for constructor in constructors:
+            new_constructor = '%s / Deprecated / ;' % constructor[:-1]
+            print 'Replacing %s with %s...' % (constructor, new_constructor)
+            text = text.replace(constructor, new_constructor)
+        file = open(filename, 'w')
+        print 'Saving %s' % filename
+        file.write(text)
+        file.close()
+
+    @staticmethod
     def add_features(qt4modulename):
         res = SipMerge.readtext(qt4modulename)
         res = res.replace("%Copying", "%Feature Qt_QT3SUPPORT\n\n%Copying")
@@ -557,6 +578,7 @@ if __name__ == "__main__":
         sys.stderr.write(filename+"\n")
         for c, line in enumerate(fileinput.input([filename], inplace=1)):
             process(filename, line, c)
+        SipMerge.merge_addDeprecatedTag(filename)
     print "Adding qt3support methods to qt4 sip files..."
     constructors = []
     methods = []
