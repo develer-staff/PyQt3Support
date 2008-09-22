@@ -15,7 +15,7 @@ echo "Preparing the distribution packages"
 echo "=========================================================="
 
 echo "----------------------------------------------------------"
-echo "Downloading PyQt4 ad PyQt3 sources..."
+echo "Downloading PyQt4 and PyQt3 sources..."
 echo "----------------------------------------------------------"
 
 wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYQT4DIR}.tar.gz
