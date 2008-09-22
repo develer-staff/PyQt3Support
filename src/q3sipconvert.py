@@ -477,11 +477,8 @@ class QMenuBar : QWidget""")
         SipMerge.writetext(qt4filename, qt3text)
 
     @staticmethod
-    def merge_addDeprecatedTag(filename):
-        file = open(filename, 'r')
-        text = file.read()
-        file.close()
-        print text
+    def filter_addDeprecatedTag(filename):
+        text = SipMerge.readtext(filename)
         constructor_expr = re.compile('Q3[A-Z][a-zA-Z]*\([^\)]*\);')
         constructors = constructor_expr.findall(text)
         if not constructors:
@@ -490,10 +487,8 @@ class QMenuBar : QWidget""")
             new_constructor = '%s / Deprecated / ;' % constructor[:-1]
             print 'Replacing %s with %s...' % (constructor, new_constructor)
             text = text.replace(constructor, new_constructor)
-        file = open(filename, 'w')
         print 'Saving %s' % filename
-        file.write(text)
-        file.close()
+        SipMerge.writetext(filename, text)
 
     @staticmethod
     def add_features(qt4modulename):
@@ -578,7 +573,7 @@ if __name__ == "__main__":
         sys.stderr.write(filename+"\n")
         for c, line in enumerate(fileinput.input([filename], inplace=1)):
             process(filename, line, c)
-        SipMerge.merge_addDeprecatedTag(filename)
+        SipMerge.filter_addDeprecatedTag(filename)
     print "Adding qt3support methods to qt4 sip files..."
     constructors = []
     methods = []
