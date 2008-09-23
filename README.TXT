@@ -85,13 +85,19 @@ Moreover, since it is fully machine-generated, it is very easy to extend it
 to cover more classes and functions. See below as per how to contribute to
 the development.
 
-The r3 version needs at least a !SIP release after this:
+== Deprecated warnings support ==
+
+!PyQt3Support now uses the new /Deprecated/ !SIP annotation.
+The /Deprecated/ annotation raises a [[http://docs.python.org/lib/module-warnings.html|Python Warning]]
+when !Qt3Support is used, both plain Q3 classes and !Qt3Support methods in Q4 classes.
+
+To use !PyQt3Support you need at least a !SIP snapshot after this:
 {{{
 2008/09/20 14:16:53  phil
 Added the /Deprecated/ class and function annotation (based on a patch from
 Lorenzo Berni).
 }}}
-
+Or a release after 4.7.8.
 
 == Support ==
 
