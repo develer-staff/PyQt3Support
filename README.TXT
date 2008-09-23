@@ -115,7 +115,7 @@ porting service. Mail us for pricing information.
 == Authors ==
 
 Matteo Bertini <naufraghi-NOSPAM@develer.com>
-Lorenzo Berni <duplo-NOSPAM@develer.com> (Qt 4.4.2 upgrade, / Deprecated / sip dupport)
+Lorenzo Berni <duplo-NOSPAM@develer.com> (PyQt 4.4.3 upgrade, / Deprecated / sip dupport)
 
 
 == Development ==
