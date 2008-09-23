@@ -3,8 +3,8 @@
 == What is this? ==
 
 PyQt3Support is an extension to
-[http://www.riverbankcomputing.co.uk/pyqt/index.php PyQt4] that adds
-'''bindings to [http://doc.trolltech.com/4.3/qt3support.html Qt's Qt3Support library]'''
+[[http://www.riverbankcomputing.co.uk/pyqt/index.php|PyQt4]] that adds
+'''bindings to [[http://doc.trolltech.com/4.3/qt3support.html|Qt's Qt3Support library]]'''
 for usage from the Python language.
 
 This is very helpful to '''migrate existing !PyQt3 applications to !PyQt4'''.
@@ -53,19 +53,19 @@ license.
 == Download ==
 
  * The (big) full package, containing a patched !PyQt4 GPL tree with
-!PyQt3Support. You can basically use this package instead of your PyQt4
-pakage.
+ !PyQt3Support. You can basically use this package instead of your !PyQt4
+ pakage.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz|PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz]]
 
  * The patch to be applied to a !PyQt4 release to add !PyQt3Support.
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.patch PyQt3Support_PyQt4.3.3_GPL_r2.patch]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.patch|PyQt3Support_PyQt4.3.3_GPL_r2.patch]]
 
 Both these packages were produced running the automated script against
 !PyQt4 4.3.3 and !PyQt3 3.17.4.
 
-If you have a commercial license and you are ''very'' anal, you probably
+If you have a commercial license and you are ''very'' paranoid, you probably
 want to run the script yourself against your own commercial copies of the
 packages. Otherwise, just grab the patch and apply it, since the result is
 exactly the same.
@@ -86,7 +86,7 @@ the development.
 If you have any question about PyQt3Support, mail us at pyqt3support@develer.com.
 
 For professionals, commercial support is also available through our employer
-([http://www.develer.com Develer Srl]); for example: full !PyQt3 to !PyQt4
+([[http://www.develer.com|Develer Srl]]); for example: full !PyQt3 to !PyQt4
 porting service. Mail us for pricing information.
 
 
@@ -101,7 +101,7 @@ If you want to send patches or further develop this module,
 you can download the script package (a mercurial working copy)
 and start reading `SOURCES.TXT`:
 
-[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.4.tar.gz PyQt3Support_sdk_0.4.tar.gz]
+[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.4.tar.gz|PyQt3Support_sdk_0.4.tar.gz]]
 
 If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
@@ -114,3 +114,4 @@ hg clone static-http://www.develer.com/~naufraghi/PyQt3Support/hg PyQt3Support.h
 == Thanks ==
 
 Damon !McCormick (code cleanup and fixes)
+
