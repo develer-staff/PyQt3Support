@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=r3-pre
-SDK=0.5-pre
+VER=r3
+SDK=0.5
 
 PYQT4VER=4.4.3
 PYQT3VER=3.17.4
