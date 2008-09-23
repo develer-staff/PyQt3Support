@@ -481,13 +481,13 @@ class QMenuBar : QWidget""")
         text = SipMerge.readtext(filename)
         constructor_expr = re.compile('Q3[A-Z][a-zA-Z]*\([^\)]*\);')
         constructors = constructor_expr.findall(text)
-        if not constructors:
-            print 'Pattern not found'
+        #if not constructors:
+        #    print 'Pattern not found'
         for constructor in constructors:
             new_constructor = '%s / Deprecated / ;' % constructor[:-1]
-            print 'Replacing %s with %s...' % (constructor, new_constructor)
+            #print 'Replacing %s with %s...' % (constructor, new_constructor)
             text = text.replace(constructor, new_constructor)
-        print 'Saving %s' % filename
+        #print 'Saving %s' % filename
         SipMerge.writetext(filename, text)
 
     @staticmethod
