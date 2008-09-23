@@ -9,6 +9,7 @@ for usage from the Python language.
 
 This is very helpful to '''migrate existing !PyQt3 applications to !PyQt4'''.
 
+
 == Why? ==
 
 Porting from Qt3 to Qt4 can be tedious and bug-prone.
@@ -31,6 +32,7 @@ and thus upgrade their code much easily and faster, with almost only
 mechanical changes. It's not a panacea of course: you probably still need
 minor manual adjustments and supervising, but it can still be of great help.
 
+
 == Where? ==
 
 !PyQt3Support has been developed and tested under '''both Windows''' (2000,
@@ -50,25 +52,27 @@ In case you are interested in developing !Qt3Support itself, you want to
 know that the script that generates !Qt3Support is released under the GPL
 license.
 
+
 == Download ==
 
  * The (big) full package, containing a patched !PyQt4 GPL tree with
  !PyQt3Support. You can basically use this package instead of your !PyQt4
  pakage.
 
- [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz|PyQt3Support_PyQt4.3.3_GPL_r2.tar.gz]]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.4.3_GPL_r3.tar.gz|PyQt3Support_PyQt4.4.3_GPL_r3.tar.gz]]
 
  * The patch to be applied to a !PyQt4 release to add !PyQt3Support.
 
- [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.3.3_GPL_r2.patch|PyQt3Support_PyQt4.3.3_GPL_r2.patch]]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.4.3_GPL_r3.patch|PyQt3Support_PyQt4.4.3_GPL_r3.patch]]
 
 Both these packages were produced running the automated script against
-!PyQt4 4.3.3 and !PyQt3 3.17.4.
+!PyQt4 4.4.3 and !PyQt3 3.17.4.
 
 If you have a commercial license and you are ''very'' paranoid, you probably
 want to run the script yourself against your own commercial copies of the
 packages. Otherwise, just grab the patch and apply it, since the result is
 exactly the same.
+
 
 == Status ==
 
@@ -81,6 +85,14 @@ Moreover, since it is fully machine-generated, it is very easy to extend it
 to cover more classes and functions. See below as per how to contribute to
 the development.
 
+The r3 version needs at least a !SIP release after this:
+{{{
+2008/09/20 14:16:53  phil
+Added the /Deprecated/ class and function annotation (based on a patch from
+Lorenzo Berni).
+}}}
+
+
 == Support ==
 
 If you have any question about PyQt3Support, mail us at pyqt3support@develer.com.
@@ -90,9 +102,10 @@ For professionals, commercial support is also available through our employer
 porting service. Mail us for pricing information.
 
 
-== Author ==
+== Authors ==
 
-Matteo Bertini <naufraghi@develer.com>
+Matteo Bertini <naufraghi-NOSPAM@develer.com>
+Lorenzo Berni <duplo-NOSPAM@develer.com> (Qt 4.4.2 upgrade, / Deprecated / sip dupport)
 
 
 == Development ==
@@ -101,7 +114,7 @@ If you want to send patches or further develop this module,
 you can download the script package (a mercurial working copy)
 and start reading `SOURCES.TXT`:
 
-[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.4.tar.gz|PyQt3Support_sdk_0.4.tar.gz]]
+[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.5.tar.gz|PyQt3Support_sdk_0.5.tar.gz]]
 
 If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
