@@ -73,8 +73,12 @@ echo "----------------------------------------------------------"
 rm -rf /tmp/PyQt3Support_sdk_${SDK}
 hg clone ./ /tmp/PyQt3Support_sdk_${SDK}
 pushd /tmp
-tar -cvvf PyQt3Support_sdk_${SDK}.tar PyQt3Support_sdk_${SDK}
+tar -cvf PyQt3Support_sdk_${SDK}.tar PyQt3Support_sdk_${SDK}
 gzip PyQt3Support_sdk_${SDK}.tar
 popd
 mv /tmp/PyQt3Support_sdk_${SDK}.tar.gz ./
+
+echo "----------------------------------------------------------"
+echo "Done!"
+echo "----------------------------------------------------------"
 
