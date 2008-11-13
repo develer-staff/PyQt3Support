@@ -19,10 +19,10 @@ echo "Downloading PyQt4 and PyQt3 sources..."
 echo "----------------------------------------------------------"
 
 wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYQT4DIR}.tar.gz
-[ ! -d ${PYQT4DIR} ] && tar zxvf ${PYQT4DIR}.tar.gz
+[ ! -d ${PYQT4DIR} ] && tar zxf ${PYQT4DIR}.tar.gz
 
 wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/${PYQT3DIR}.tar.gz
-[ ! -d ${PYQT3DIR} ] && tar zxvf ${PYQT3DIR}.tar.gz
+[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 
 
 echo "----------------------------------------------------------"
@@ -73,7 +73,7 @@ echo "----------------------------------------------------------"
 rm -rf /tmp/PyQt3Support_sdk_${SDK}
 hg clone ./ /tmp/PyQt3Support_sdk_${SDK}
 pushd /tmp
-tar -cvf PyQt3Support_sdk_${SDK}.tar PyQt3Support_sdk_${SDK}
+tar -cf PyQt3Support_sdk_${SDK}.tar PyQt3Support_sdk_${SDK}
 gzip PyQt3Support_sdk_${SDK}.tar
 popd
 mv /tmp/PyQt3Support_sdk_${SDK}.tar.gz ./
