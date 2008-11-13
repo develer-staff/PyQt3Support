@@ -3,10 +3,12 @@
 VER=r4-pre
 SDK=0.6-pre
 
-PYQT4VER=4.4.3
-PYQT3VER=3.17.4
+PYQT4VER=4.4.4
+PYQT3VER=3.17.5
+SIPVER=4.7.8
 PYQT4DIR=PyQt-x11-gpl-${PYQT4VER}
 PYQT3DIR=PyQt-x11-gpl-${PYQT3VER}
+SIPDIR=sip-${SIPVER}
 
 cd $(dirname $0) && cd ..
 
@@ -15,7 +17,7 @@ echo "Preparing the distribution packages"
 echo "=========================================================="
 
 echo "----------------------------------------------------------"
-echo "Downloading PyQt4 and PyQt3 sources..."
+echo "Downloading PyQt4, PyQt3 and sip sources..."
 echo "----------------------------------------------------------"
 
 wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYQT4DIR}.tar.gz
@@ -24,6 +26,8 @@ wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/${PYQT4DIR}.t
 wget -c http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/${PYQT3DIR}.tar.gz
 [ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 
+wget -c http://www.riverbankcomputing.co.uk/static/Downloads/sip4/${SIPDIR}.tar.gz
+[ ! -d ${SIPDIR} ] && tar zxf ${SIPDIR}.tar.gz
 
 echo "----------------------------------------------------------"
 echo "Building the full package..."
