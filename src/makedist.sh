@@ -6,7 +6,7 @@ PYQT4VER=4.4.4
 PYQT3VER=3.17.5
 SIPVER=4.7.8
 
-DIST=glp
+DIST=gpl
 #DIST=commercial
 
 if [ "$DIST" = "gpl" ]; then
