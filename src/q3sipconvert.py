@@ -177,6 +177,8 @@ class SipFilters:
     def filter_typeChange(line, c=None, filename=""):
         getQ3PtrList = re.compile("Q3PtrList(\s*)<([^>]*)>(.*)")
         line = getQ3PtrList.sub("QList\\1<\\2*>\\3", line)
+        if "palette" in filename:
+            line = line.replace("const QColorGroup &", "QColorGroup ")
         return line
 
     @staticmethod
@@ -451,6 +453,7 @@ class SipMerge:
             for q3line in q3.split("\n"):
                 q3line = SipMerge.filter_qt3Constructor(q3line, filename=qt4filename)
                 q3line = SipFilters.filter_convertQtVersion(q3line)
+                q3line = SipFilters.filter_typeChange(q3line, filename=qt4filename)
                 q3line = SipFilters.filter_resolveProblematics(q3line, filename=qt4filename)
                 q3line = SipFilters.filter_extraDefines(q3line, filename=qt4filename)
                 res.append(q3line)
