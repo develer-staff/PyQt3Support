@@ -327,6 +327,8 @@ class SipFilters:
             line = line.replace("qvbuttongroup.h", "q3buttongroup.h")
             if "moveFocus" in line or "buttonToggled" in line:
                 line = "//" + line
+        elif "frame.sip" in filename:
+            line = line.replace("Q3Frame : QWidget", "Q3Frame : QFrame")
         return line
 
     @staticmethod
