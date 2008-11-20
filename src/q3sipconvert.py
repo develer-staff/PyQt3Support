@@ -531,7 +531,7 @@ def process(filename, line, c, comment_lines={}):
 if __name__ == "__main__":
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     from optparse import OptionParser
-    usage = "usage: %prog pyqt3dir pyqt4dir" 
+    usage = "usage: %prog pyqt3dir pyqt4dir"
     parser = OptionParser(usage=usage)
     (opts, args) = parser.parse_args()
 
