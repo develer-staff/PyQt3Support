@@ -6,17 +6,19 @@ PYQT4VER=4.4.4
 PYQT3VER=3.17.6
 SIPVER=4.7.9
 
-DIST=gpl
-#DIST=commercial
-
-if [ "$DIST" = "gpl" ]; then
+if [ -z $1 ] || [ $1 = "gpl" ]; then
+  DIST=gpl
   DOWNLOADIR=http://www.riverbankcomputing.co.uk/static/Downloads
   PYQT4DIR=PyQt-x11-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-x11-${DIST}-${PYQT3VER}
-else
+elif [ $1 = "commercial" ]; then
+  DIST=commercial
   DOWNLOADIR=http://download.yourself.it/
   PYQT4DIR=PyQt-win-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-${DIST}-${PYQT3VER}
+else
+  echo "$0 [gpl|commercial] (default=gpl)"
+  exit 1
 fi
 
 SIPDIR=sip-${SIPVER}
