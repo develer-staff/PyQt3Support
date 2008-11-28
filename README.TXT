@@ -125,7 +125,7 @@ If you want to send patches or further develop this module,
 you can download the script package (a mercurial working copy)
 and start reading `SOURCES.TXT`:
 
-[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support-sdk-0.6.tar.gz|PyQt3Support-sdk-0.6.tar.gz]]
+[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.6.tar.gz|PyQt3Support_sdk_0.6.tar.gz]]
 
 If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
