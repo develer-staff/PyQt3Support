@@ -511,15 +511,15 @@ def process(filename, line, c, comment_lines={}):
     oldline = line
     for qtfilter in [f for f in dir(SipFilters) if "filter_" in f]:
         line = getattr(SipFilters, qtfilter)(line, c, filename)
+    comment_lines.setdefault(filename, False)
     if "q3menudata.sip" in filename:
-        comment_lines.setdefault(filename, False)
         if "class QMenuData" in line: # we need only QMenuItem
             comment_lines[filename] = True
     elif "q3mime.sip" in filename:
         if "class QMimeSource" in line: # we need only QMimeSource
-            comment_lines[filename] = True
-        elif "class Q3MimeSourceFactory" in line:
             comment_lines[filename] = False
+        elif "class Q3MimeSourceFactory" in line:
+            comment_lines[filename] = True
     if comment_lines.get(filename, False):
         line = "// "+line
     if oldline != line and "-----" in filename:
