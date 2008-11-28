@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VER=r4-pre
-SDKVER=0.6-pre
+VER=r4
+SDKVER=0.6
 PYQT4VER=4.4.4
 PYQT3VER=3.17.6
 SIPVER=4.7.9
