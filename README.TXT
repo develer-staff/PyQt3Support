@@ -3,7 +3,7 @@
 == What is this? ==
 
 PyQt3Support is an extension to
-[[http://www.riverbankcomputing.co.uk/pyqt/index.php|PyQt4]] that adds
+[[http://www.riverbankcomputing.co.uk/software/pyqt/intro|PyQt4]] that adds
 '''bindings to [[http://doc.trolltech.com/4.4/qt3support.html|Qt's Qt3Support library]]'''
 for usage from the Python language.
 
@@ -46,7 +46,7 @@ because its source code is machine-generated from !PyQt3's and !PyQt4's
 source code.
 
 Thus, !Qt3Support can be '''freely used under both the GPL or the
-commercial license''' offered by Qt/!PyQt producers.
+commercial license''' offered by Qt/PyQt producers.
 
 In case you are interested in developing !Qt3Support itself, you want to
 know that the script that generates !Qt3Support is released under the GPL
@@ -59,11 +59,11 @@ license.
  !PyQt3Support. You can basically use this package instead of your !PyQt4
  pakage.
 
- [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.4.4_gpl_r4.tar.gz|PyQt3Support_PyQt4.4.4_gpl_r4.tar.gz]]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support-PyQt4.4.4-gpl-r4.tar.gz|PyQt3Support-PyQt4.4.4-gpl-r4.tar.gz]]
 
  * The patch to be applied to a !PyQt4 release to add !PyQt3Support.
 
- [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_PyQt4.4.4_gpl_r4.patch|PyQt3Support_PyQt4.4.4_gpl_r4.patch]]
+ [[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support-PyQt4.4.4-gpl-r4.patch|PyQt3Support-PyQt4.4.4-gpl-r4.patch]]
 
 Both these packages were produced running the automated script against
 !PyQt4 4.4.4 and !PyQt3 3.17.6.
@@ -115,7 +115,8 @@ porting service. Mail us for pricing information.
 == Authors ==
 
 Matteo Bertini <naufraghi-NOSPAM@develer.com>
-Lorenzo Berni <duplo-NOSPAM@develer.com> (PyQt 4.4.3 upgrade, / Deprecated / sip dupport)
+
+Lorenzo Berni <duplo-NOSPAM@develer.com> (!PyQt 4.4.3 upgrade, / Deprecated / sip dupport)
 
 
 == Development ==
@@ -124,7 +125,7 @@ If you want to send patches or further develop this module,
 you can download the script package (a mercurial working copy)
 and start reading `SOURCES.TXT`:
 
-[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support_sdk_0.6.tar.gz|PyQt3Support_sdk_0.6.tar.gz]]
+[[http://www.develer.com/~naufraghi/PyQt3Support/PyQt3Support-sdk-0.6.tar.gz|PyQt3Support-sdk-0.6.tar.gz]]
 
 If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
@@ -137,5 +138,6 @@ hg clone static-http://www.develer.com/~naufraghi/PyQt3Support/hg PyQt3Support.h
 == Thanks ==
 
 Damon !McCormick (code cleanup and fixes)
-Matt Newell (fix wrong Q3Frame hierarchy)
+
+Matt Newell (fix wrong !Q3Frame hierarchy)
 
