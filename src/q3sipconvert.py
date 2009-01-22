@@ -140,7 +140,7 @@ q3classes = """qt/VBox qt/HBox qt/Frame qt/Grid qt/Accel qt/PopupMenu qt/MenuDat
                qt/StyleSheet qt/Mime qt/ComboBox qt/GroupBox qt/FileDialog
                qt/Url qt/WidgetStack qt/HGroupBox qt/VGroupBox qt/IconView
                qt/DragObject qt/Picture qt/ValueList qt/CString qt/ButtonGroup
-               qt/VButtonGroup""".split()
+               qt/VButtonGroup qt/TextEdit qt/DateTimeEdit qt/SyntaxHighlighter""".split()
 assert len(q3classes) == len(set(q3classes)), (len(q3classes), len(set(q3classes)))
 
 getCompatCode = re.compile("%If\ [\(\ ]*.*-.*Qt[^%]*%End\n*")
@@ -329,6 +329,15 @@ class SipFilters:
                 line = "//" + line
         elif "frame.sip" in filename:
             line = line.replace("Q3Frame : QWidget", "Q3Frame : QFrame")
+        elif "textedit.sip" in filename:
+            line = line.replace("QTextDocument", "Q3TextDocument")
+            line = line.replace("QTextCursor", "Q3TextCursor")
+            line = line.replace("void im", "//void im")
+            line = line.replace("void setAutoFormatting(int);", "void setAutoFormatting(AutoFormatting);")
+            line = line.replace("int autoFormatting() const;", "AutoFormatting autoFormatting() const;")
+
+        elif "syntaxhighlighter.sip" in filename:
+            line = line.replace("class Q3SyntaxHighlighter : Qt", "class Q3SyntaxHighlighter")
         return line
 
     @staticmethod
