@@ -144,6 +144,7 @@ q3classes = """qt/VBox qt/HBox qt/Frame qt/Grid qt/Accel qt/PopupMenu qt/MenuDat
 assert len(q3classes) == len(set(q3classes)), (len(q3classes), len(set(q3classes)))
 
 getCompatCode = re.compile("%If\ [\(\ ]*.*-.*Qt[^%]*%End\n*")
+getEnum = re.compile("\ *enum[^}]*};")
 
 class SipFilters:
     @staticmethod
@@ -491,6 +492,11 @@ class QMenuBar : QWidget""")
         SipMerge.writetext(qt4filename, qt3text)
 
     @staticmethod
+    def merge_cleanupEnums(qt3filename, qt4filename, anchor=None, method=None):
+        qt3text = getEnum.sub("// merge_cleanupEnums", SipMerge.readtext(qt3filename))
+        SipMerge.writetext(qt4filename, qt3text)
+
+    @staticmethod
     def filter_addDeprecatedTag(filename):
         text = SipMerge.readtext(filename)
         constructor_expr = re.compile('Q3[A-Z][a-zA-Z]*\([^\)]*\);')
@@ -579,6 +585,8 @@ if __name__ == "__main__":
         shutil.copy(pyqt3base + "sip/%s/q%s.sip" % (qdir, qclass.lower()), destfilename)
         os.chmod(destfilename, stat.S_IREAD + stat.S_IWRITE)
         SipMerge.merge_cleanup2CompatibilityCode(destfilename, destfilename)
+        if "Frame" in qclass:
+            SipMerge.merge_cleanupEnums(destfilename, destfilename)
     shutil.copy(modulename + ".in", destdir + modulename)
     files = glob.glob(destdir + "*.sip")
     print "Processing %d files..." % len(files)
