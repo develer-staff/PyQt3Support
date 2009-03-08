@@ -21,7 +21,8 @@
                     {sipName_Q3ListBox,        &sipClass_Q3ListBox,          -1, 15}, // 14
             {sipName_Q3MainWindow,         &sipClass_Q3MainWindow,           -1, 16}, // 15
             {sipName_Q3PopupMenu,          &sipClass_Q3PopupMenu,            -1, 17}, // 16
-            {sipName_Q3StyleSheet,         &sipClass_Q3StyleSheet,           -1, -1}, // 17
+            {sipName_Q3StyleSheet,         &sipClass_Q3StyleSheet,           -1, 18}, // 17
+            {sipName_Q3GroupBox,           &sipClass_Q3GroupBox,             -1, -1}, // 18
         };
 
         int i = 0;
