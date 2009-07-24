@@ -2,9 +2,9 @@
 
 VER=r5-pre
 SDKVER=0.7-pre
-PYQT4VER=4.4.4
-PYQT3VER=3.17.6
-SIPVER=4.7.9
+PYQT4VER=4.5.2
+PYQT3VER=3.18.1
+SIPVER=4.8.1
 
 if [ -z $1 ] || [ $1 = "gpl" ]; then
   DIST=gpl

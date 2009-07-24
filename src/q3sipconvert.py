@@ -530,7 +530,7 @@ def process(filename, line, c, comment_lines={}):
     if "q3menudata.sip" in filename:
         if "class QMenuData" in line: # we need only QMenuItem
             comment_lines[filename] = True
-    elif "q3mime.sip" in filename:
+    elif "q3mime.sip" in filename: # FIXME: unbalaced if in win-commercial version
         if "class QWindowsMime" in line: # we exclude only QWindowsMime
             comment_lines[filename] = True
         elif "class QMimeSource" in line:
