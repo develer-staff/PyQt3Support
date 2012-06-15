@@ -187,21 +187,6 @@ Index: uic/properties.py
          self.factory = factory
          self.reset()
  
-@@ -50,9 +51,11 @@
-             if prefix == "Qt":
-                 return getattr(QtCore.Qt, membername)
-             else:
--                return getattr(getattr(QtGui, prefix), membername)
-+                mod = Qt3Support if prefix.startswith("Q3") else QtGui
-+                return getattr(getattr(mod, prefix), membername)
-         except ValueError:
--            return getattr(getattr(QtGui, self.wclass), cpp_name)
-+            mod = Qt3Support if self.wclass.startswith("Q3") else QtGui
-+            return getattr(getattr(mod, self.wclass), cpp_name)
- 
-     def _set(self, prop):
-         expr = [self._pyEnumMember(v) for v in prop.text.split('|')]
-
 Index: uic/Loader/qobjectcreator.py
 ===================================================================
 --- uic/Loader/qobjectcreator.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
