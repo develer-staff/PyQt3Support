@@ -10,12 +10,12 @@ PYQT3VER=3.18.1
 
 if [ "$1" = "gpl" ]; then
   DIST=gpl
-  DOWNLOADIR=http://www.riverbankcomputing.co.uk/static/Downloads
+  REMOTEDIR=http://www.riverbankcomputing.co.uk/static/Downloads
   PYQT4DIR=PyQt-x11-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-x11-${DIST}-${PYQT3VER}
 elif [ "$1" = "commercial" ]; then
   DIST=commercial
-  DOWNLOADIR=http://download.yourself.it/
+  REMOTEDIR=http://download.yourself.it/
   PYQT4DIR=PyQt-win-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-${DIST}-${PYQT3VER}
 else
@@ -35,10 +35,10 @@ if [ $DIST = "gpl" ]; then
 	echo "Downloading PyQt4, PyQt3 and sip sources..."
 	echo "----------------------------------------------------------"
 
-	wget -c ${DOWNLOADIR}/PyQt4/${PYQT4DIR}.tar.gz
+	wget -c ${REMOTEDIR}/PyQt4/${PYQT4DIR}.tar.gz
 	[ ! -d ${PYQT4DIR} ] && tar zxf ${PYQT4DIR}.tar.gz
 
-	wget -c ${DOWNLOADIR}/PyQt3/${PYQT3DIR}.tar.gz
+	wget -c ${REMOTEDIR}/PyQt3/${PYQT3DIR}.tar.gz
 	[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 fi;
 
