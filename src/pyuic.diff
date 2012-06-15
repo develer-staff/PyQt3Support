@@ -18,21 +18,6 @@ Index: uic/objcreator.py
  
          # Get the optional plugins.
          plugindir = os.path.join(os.path.split(__file__)[0], "widget-plugins")
-@@ -34,10 +35,10 @@
-             if not filename.endswith(".py"):
-                 continue
- 
--            plugin_globals = {"MODULE":     MODULE,
--                              "CW_FILTER":  CW_FILTER,
--                              "MATCH":      MATCH,
--                              "NO_MATCH":   NO_MATCH}
-+            plugin_globals = {"MODULE" : MODULE,
-+                              "CW_FILTER" : CW_FILTER,
-+                              "MATCH": MATCH,
-+                              "NO_MATCH": NO_MATCH}
-             plugin_locals = {}
- 
-             if load_plugin(open(os.path.join(plugindir, filename)), plugin_globals, plugin_locals):
 
 Index: uic/uiparser.py
 ===================================================================
