@@ -71,12 +71,12 @@ cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 echo "----------------------------------------------------------"
 echo "Patching configure.py..."
 echo "----------------------------------------------------------"
-patch $FDESTDIR/configure.py -p0 <src/configure.diff
+patch --merge $FDESTDIR/configure.py -p0 <src/configure.diff
 
 echo "----------------------------------------------------------"
 echo "Patching pyuic..."
 echo "----------------------------------------------------------"
-patch --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff
+patch --merge --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff
 
 echo "Building ${FDESTDIR}.tar.gz package..."
 rm -rf ${FDESTDIR}.tar.gz
