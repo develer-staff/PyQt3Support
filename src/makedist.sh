@@ -8,6 +8,9 @@ SDKVER=0.7-pre
 PYQT4VER=4.6.2
 PYQT3VER=3.18.1
 
+DOWNLOAD=downloads
+RELEASE=release
+
 if [ "$1" = "gpl" ]; then
   DIST=gpl
   REMOTEDIR=http://www.riverbankcomputing.co.uk/static/Downloads
@@ -26,6 +29,9 @@ fi
 
 cd $(dirname $0) && cd ..
 
+[ ! -d ${DOWNLOAD} ] && mkdir $DOWNLOAD
+pushd $DOWNLOAD
+
 echo "=========================================================="
 echo "Preparing the distribution packages"
 echo "=========================================================="
@@ -42,15 +48,19 @@ if [ $DIST = "gpl" ]; then
 	[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 fi;
 
+popd
+
+[ ! -d ${RELEASE} ] && mkdir $RELEASE
+
 echo "----------------------------------------------------------"
 echo "Building the full package..."
 echo "----------------------------------------------------------"
-FDESTDIR=PyQt3Support-PyQt${PYQT4VER}-${DIST}-${VER}
+FDESTDIR=$RELEASE/PyQt3Support-PyQt${PYQT4VER}-${DIST}-${VER}
 
 rm -rf $FDESTDIR
 
 echo "Patching PyQt4 sources..."
-src/q3sipconvert.py ${PYQT3DIR} ${PYQT4DIR}
+src/q3sipconvert.py $DOWNLOAD/${PYQT3DIR} $DOWNLOAD/${PYQT4DIR}
 
 echo "Copying PyQt3Support sources in $FDESTDIR"
 mv PyQt3Support $FDESTDIR
@@ -83,7 +93,7 @@ gzip ${FDESTDIR}.tar
 echo "----------------------------------------------------------"
 echo "Building the addon package..."
 echo "----------------------------------------------------------"
-PDESTNAME=${FDESTDIR}.patch
+PDESTNAME=$RELEASE/${FDESTDIR}.patch
 
 rm -f $PDESTNAME
 cp README.TXT $PDESTNAME
@@ -105,7 +115,7 @@ pushd /tmp
 tar -cf ${SDK}.tar ${SDK}
 gzip ${SDK}.tar
 popd
-mv /tmp/${SDK}.tar.gz ./
+mv /tmp/${SDK}.tar.gz ./$RELEASE/
 
 echo "----------------------------------------------------------"
 echo "Done!"
