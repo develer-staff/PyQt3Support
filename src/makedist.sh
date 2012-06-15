@@ -2,26 +2,24 @@
 
 VER=r5-pre
 SDKVER=0.7-pre
-PYQT4VER=4.5.2
+PYQT4VER=4.6.2
 PYQT3VER=3.18.1
-SIPVER=4.8.1
 
-if [ -z $1 ] || [ $1 = "gpl" ]; then
+if [ "$1" = "gpl" ]; then
   DIST=gpl
   DOWNLOADIR=http://www.riverbankcomputing.co.uk/static/Downloads
   PYQT4DIR=PyQt-x11-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-x11-${DIST}-${PYQT3VER}
-elif [ $1 = "commercial" ]; then
+elif [ "$1" = "commercial" ]; then
   DIST=commercial
   DOWNLOADIR=http://download.yourself.it/
   PYQT4DIR=PyQt-win-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-${DIST}-${PYQT3VER}
 else
-  echo "$0 [gpl|commercial] (default=gpl)"
+  echo "Usage:"
+  echo "    $0 [gpl|commercial]"
   exit 1
 fi
-
-SIPDIR=sip-${SIPVER}
 
 cd $(dirname $0) && cd ..
 
@@ -29,18 +27,17 @@ echo "=========================================================="
 echo "Preparing the distribution packages"
 echo "=========================================================="
 
-echo "----------------------------------------------------------"
-echo "Downloading PyQt4, PyQt3 and sip sources..."
-echo "----------------------------------------------------------"
+if [ $DIST = "gpl" ]; then
+	echo "----------------------------------------------------------"
+	echo "Downloading PyQt4, PyQt3 and sip sources..."
+	echo "----------------------------------------------------------"
 
-wget -c ${DOWNLOADIR}/PyQt4/${PYQT4DIR}.tar.gz
-[ ! -d ${PYQT4DIR} ] && tar zxf ${PYQT4DIR}.tar.gz
+	wget -c ${DOWNLOADIR}/PyQt4/${PYQT4DIR}.tar.gz
+	[ ! -d ${PYQT4DIR} ] && tar zxf ${PYQT4DIR}.tar.gz
 
-wget -c ${DOWNLOADIR}/PyQt3/${PYQT3DIR}.tar.gz
-[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
-
-wget -c ${DOWNLOADIR}/sip4/${SIPDIR}.tar.gz
-[ ! -d ${SIPDIR} ] && tar zxf ${SIPDIR}.tar.gz
+	wget -c ${DOWNLOADIR}/PyQt3/${PYQT3DIR}.tar.gz
+	[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
+fi;
 
 echo "----------------------------------------------------------"
 echo "Building the full package..."
@@ -60,7 +57,18 @@ cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 echo "----------------------------------------------------------"
 echo "Patching configure.py..."
 echo "----------------------------------------------------------"
-patch $FDESTDIR/configure.py -p0 <src/configure.diff
+patch $FDESTDIR/configure.py -p0 <src/configure.diff || exit 1
+
+echo "----------------------------------------------------------"
+echo "Patching pyuic..."
+echo "----------------------------------------------------------"
+patch --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff || exit 1
+
+echo "Building ${FDESTDIR}.tar.gz package..."
+rm -rf ${FDESTDIR}.tar.gz
+tar -cf ${FDESTDIR}.tar $FDESTDIR
+gzip ${FDESTDIR}.tar
+
 
 echo "Building ${FDESTDIR}.tar.gz package..."
 rm -rf ${FDESTDIR}.tar.gz
