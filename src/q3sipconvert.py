@@ -426,9 +426,19 @@ class SipMerge:
                 if line not in qt3stuff:
                     qt3stuff.append(line)
             qt3stuff += [r"%End"]
-            first_constructor = getConstructor.findall(qt4text)[0]
-            qt4text = qt4text.replace(first_constructor,
-                                      "\n".join([first_constructor]+qt3stuff))
+
+            qt4lines = []
+            step = 0
+            for l in qt4text.split('\n'):
+                if step < 2:
+                    is_ctor = getConstructor.search(l)
+                    if step == 0 and is_ctor:
+                        step = 1
+                    elif step == 1 and not is_ctor:
+                        qt4lines.extend(qt3stuff)
+                        step = 2
+                qt4lines.append(l)
+            qt4text = '\n'.join(qt4lines)
         SipMerge.writetext(qt4filename, qt4text)
 
     @staticmethod
