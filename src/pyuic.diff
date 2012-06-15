@@ -184,29 +184,6 @@ Index: uic/driver.py
      def on_Exception(self, e):
          """ Handle a generic exception. """
 
-Property changes on: uic/widget-plugins/qtwebkit.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
-
-Property changes on: uic/widget-plugins/qwt.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
-
-Property changes on: uic/widget-plugins/qaxcontainer.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
-
-Property changes on: uic/widget-plugins/qscintilla.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
 Index: uic/properties.py
 ===================================================================
 --- uic/properties.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
@@ -239,23 +216,6 @@ Index: uic/properties.py
  
      def _set(self, prop):
          expr = [self._pyEnumMember(v) for v in prop.text.split('|')]
-
-Property changes on: uic/properties.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
-
-Property changes on: uic/Loader/__init__.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
-
-Property changes on: uic/Loader/loader.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
 
 Index: uic/Loader/qobjectcreator.py
 ===================================================================
@@ -297,12 +257,6 @@ Index: uic/Loader/qobjectcreator.py
      def createCustomWidgetLoader(self):
          return _CustomWidgetLoader()
  
-
-Property changes on: uic/Loader/qobjectcreator.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
 Index: uic/__init__.py
 ===================================================================
 --- uic/__init__.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
