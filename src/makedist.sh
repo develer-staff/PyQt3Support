@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e # exit on error
+set -u # stop on undeclared variable
+
 VER=r5-pre
 SDKVER=0.7-pre
 PYQT4VER=4.6.2
@@ -57,12 +60,12 @@ cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 echo "----------------------------------------------------------"
 echo "Patching configure.py..."
 echo "----------------------------------------------------------"
-patch $FDESTDIR/configure.py -p0 <src/configure.diff || exit 1
+patch $FDESTDIR/configure.py -p0 <src/configure.diff
 
 echo "----------------------------------------------------------"
 echo "Patching pyuic..."
 echo "----------------------------------------------------------"
-patch --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff || exit 1
+patch --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff
 
 echo "Building ${FDESTDIR}.tar.gz package..."
 rm -rf ${FDESTDIR}.tar.gz
