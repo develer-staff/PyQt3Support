@@ -1,22 +1,23 @@
 #!/bin/bash
-
 set -e # exit on error
 set -u # stop on undeclared variable
 
 VER=r5-pre
 SDKVER=0.7-pre
-PYQT4VER=4.6.2
+PYQT4VER=4.9.1
 PYQT3VER=3.18.1
 
 DOWNLOAD=downloads
 RELEASE=release
 
-if [ "$1" = "gpl" ]; then
+license=${1:-unset}
+
+if [ "$license" = "gpl" ]; then
   DIST=gpl
   REMOTEDIR=http://www.riverbankcomputing.co.uk/static/Downloads
   PYQT4DIR=PyQt-x11-${DIST}-${PYQT4VER}
   PYQT3DIR=PyQt-x11-${DIST}-${PYQT3VER}
-elif [ "$1" = "commercial" ]; then
+elif [ "$license" = "commercial" ]; then
   DIST=commercial
   REMOTEDIR=http://download.yourself.it/
   PYQT4DIR=PyQt-win-${DIST}-${PYQT4VER}
@@ -59,7 +60,7 @@ FDESTDIR=$RELEASE/PyQt3Support-PyQt${PYQT4VER}-${DIST}-${VER}
 
 rm -rf $FDESTDIR
 
-echo "Patching PyQt4 sources..."
+echo "Merging PyQt3Support methods in PyQt4 sources..."
 src/q3sipconvert.py $DOWNLOAD/${PYQT3DIR} $DOWNLOAD/${PYQT4DIR}
 
 echo "Copying PyQt3Support sources in $FDESTDIR"
