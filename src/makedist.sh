@@ -117,19 +117,13 @@ gzip ${FDESTDIR}.tar
 
 
 echo "----------------------------------------------------------"
-echo "Building the addon package..."
+echo "Building the addon package patch..."
 echo "----------------------------------------------------------"
 PDESTNAME=${FDESTDIR}.patch
 
-rm -f $PDESTNAME
-cp README.TXT $PDESTNAME
-
-echo "Diffing common files..."
-pushd $PYQT4DIR
-diff -urN ./sip ../$FDESTDIR/sip >> ../$PDESTNAME
-cat ../src/configure.diff >> ../$PDESTNAME
-cat ../src/pyuic.diff >> ../$PDESTNAME
-popd
+cp $FDESTDIR/PYQT3SUPPORT.TXT $PDESTNAME
+cat src/configure.diff >> $PDESTNAME
+cat src/pyuic.diff >> $PDESTNAME
 
 echo "----------------------------------------------------------"
 echo "Building the source package..."
