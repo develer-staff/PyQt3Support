@@ -1,5 +1,5 @@
---- downloads/PyQt-x11-gpl-4.9.1/configure.py	2012-02-10 11:35:05.000000000 +0100
-+++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/configure.py	2012-06-18 11:43:52.996866101 +0200
+--- downloads/PyQt-x11-gpl-4.9.1/configure.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/configure.py
 @@ -377,6 +377,7 @@
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
          check_module("phonon", "phonon/videowidget.h",
