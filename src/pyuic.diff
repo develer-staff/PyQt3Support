@@ -1,14 +1,6 @@
-Index: uic/objcreator.py
-===================================================================
---- uic/objcreator.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/objcreator.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -15,12 +15,13 @@
- CW_FILTER = 1
- 
- 
--class QObjectCreator(object):    
-+class QObjectCreator(object):
-     def __init__(self, creatorPolicy):
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/objcreator.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/objcreator.py
+@@ -65,7 +65,8 @@
          self._cpolicy = creatorPolicy
  
          self._cwFilters = []
@@ -17,55 +9,34 @@ Index: uic/objcreator.py
 +                         self._cpolicy.createQt3SupportWrapper()]
  
          # Get the optional plugins.
-         plugindir = os.path.join(os.path.split(__file__)[0], "widget-plugins")
-
-Index: uic/uiparser.py
-===================================================================
---- uic/uiparser.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/uiparser.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -82,15 +82,18 @@
-         return isinstance(self[-1], QtGui.QLayout)
+         for plugindir in widgetPluginPath:
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/uiparser.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/uiparser.py
+@@ -123,13 +123,16 @@
  
  
--class UIParser(object):    
+ class UIParser(object):    
 -    def __init__(self, QtCoreModule, QtGuiModule, creatorPolicy):
-+class UIParser(object):
 +    def __init__(self, QtCoreModule, QtGuiModule, Qt3SupportModule,
 +                 creatorPolicy):
          self.factory = QObjectCreator(creatorPolicy)
 -        self.wprops = Properties(self.factory, QtCoreModule, QtGuiModule)
--        
--        global QtCore, QtGui
 +        self.wprops = Properties(self.factory, QtCoreModule, QtGuiModule,
 +                                 Qt3SupportModule)
-+
+         
+-        global QtCore, QtGui
 +        global QtCore, QtGui, Qt3Support
          QtCore = QtCoreModule
          QtGui = QtGuiModule
--        
 +        Qt3Support = Qt3SupportModule
-+
+         
          self.reset()
  
-     def uniqueName(self, name):
-@@ -218,20 +221,20 @@
-             tooltip = self.wprops.getAttribute(elem, "toolTip")
-             if tooltip is not None:
-                 topwidget.setTabToolTip(topwidget.indexOf(widget), tooltip)
--            
-+
-         elif isinstance(topwidget, QtGui.QWizard):
-             topwidget.addPage(widget)
-             
-         elif isinstance(topwidget, QtGui.QStackedWidget):
-             topwidget.addWidget(widget)
--            
-+
+@@ -304,10 +307,10 @@
          elif isinstance(topwidget, (QtGui.QDockWidget, QtGui.QScrollArea)):
              topwidget.setWidget(widget)
--            
+             
 -        elif isinstance(topwidget, QtGui.QMainWindow):
-+
 +        elif isinstance(topwidget, (QtGui.QMainWindow, Qt3Support.Q3MainWindow)):
              if type(widget) == QtGui.QWidget:
                  topwidget.setCentralWidget(widget)
@@ -74,7 +45,7 @@ Index: uic/uiparser.py
                  tbArea = self.wprops.getAttribute(elem, "toolBarArea")
  
                  if tbArea is None:
-@@ -253,7 +256,7 @@
+@@ -324,7 +327,7 @@
                  topwidget.setMenuBar(widget)
              elif isinstance(widget, QtGui.QStatusBar):
                  topwidget.setStatusBar(widget)
@@ -83,8 +54,8 @@ Index: uic/uiparser.py
                  dwArea = self.wprops.getAttribute(elem, "dockWidgetArea")
                  topwidget.addDockWidget(QtCore.Qt.DockWidgetArea(dwArea),
                          widget)
-@@ -511,6 +514,9 @@
- 
+@@ -584,6 +587,9 @@
+                         row, col)
                  w.setItem(row, col, item)
  
 +            else:
@@ -93,9 +64,9 @@ Index: uic/uiparser.py
              self.item_nr += 1
  
      def addAction(self, elem):
-@@ -562,6 +568,31 @@
- 
-                 self.row_counter += 1
+@@ -716,6 +722,31 @@
+                     w.setVerticalHeaderItem(self.row_counter, item)
+                     self.row_counter += 1
  
 +        elif isinstance(w, Qt3Support.Q3Table):
 +            if len(elem) == 0:
@@ -125,12 +96,8 @@ Index: uic/uiparser.py
      def createAction(self, elem):
          self.setupObject("QAction", self.currentActionGroup or self.toplevelWidget,
                           elem)
-@@ -725,18 +756,16 @@
-                     mpath.append(part)
- 
-             return '.'.join(mpath)
--    
-+
+@@ -888,8 +919,6 @@
+     
          for custom_widget in iter(elem):
              classname = custom_widget.findtext("class")
 -            if classname.startswith("Q3"):
@@ -138,37 +105,21 @@ Index: uic/uiparser.py
              self.factory.addCustomWidget(classname,
                                       custom_widget.findtext("extends") or "QWidget",
                                       header2module(custom_widget.findtext("header")))
- 
-     def createToplevelWidget(self, classname, widgetname):
-         raise NotImplementedError
--    
-+
-     # finalize will be called after the whole tree has been parsed and can be
-     # overridden.
-     def finalize(self):
-
-Index: uic/driver.py
-===================================================================
---- uic/driver.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/driver.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -75,10 +75,7 @@
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/driver.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/driver.py
+@@ -110,9 +110,6 @@
      def on_NoSuchWidgetError(self, e):
          """ Handle a NoSuchWidgetError exception. """
  
 -        if e.args[0].startswith("Q3"):
 -            sys.stderr.write("Error: Q3Support widgets are not supported by PyQt4.\n")
 -        else:
--            sys.stderr.write(str(e) + "\n")
-+        sys.stderr.write(str(e) + "\n")
+             sys.stderr.write(str(e) + "\n")
  
      def on_Exception(self, e):
-         """ Handle a generic exception. """
-
-Index: uic/properties.py
-===================================================================
---- uic/properties.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/properties.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -31,10 +31,11 @@
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/properties.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/properties.py
+@@ -75,10 +75,11 @@
  
  
  class Properties(object):
@@ -180,23 +131,22 @@ Index: uic/properties.py
          QtCore = QtCore_mod
 +        Qt3Support = Qt3Support_mod
          self.factory = factory
-         self.reset()
  
-Index: uic/Loader/qobjectcreator.py
-===================================================================
---- uic/Loader/qobjectcreator.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/Loader/qobjectcreator.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -5,13 +5,18 @@
- except NameError:
-     from sets import Set as set
+         self._base_dir = ''
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/Loader/qobjectcreator.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/Loader/qobjectcreator.py
+@@ -40,7 +40,7 @@
+ 
+ import sys
  
 -from PyQt4 import QtGui
 +from PyQt4 import QtGui, Qt3Support
  
+ 
  class _QtGuiWrapper(object):
-     def search(cls):
-         return getattr(QtGui, cls, None)
+@@ -49,6 +49,11 @@
      search = staticmethod(search)
+ 
  
 +class _Qt3SupportWrapper(object):
 +    def search(cls):
@@ -206,27 +156,19 @@ Index: uic/Loader/qobjectcreator.py
  class _ModuleWrapper(object):
      def __init__(self, moduleName, classes):
          self._moduleName = moduleName
-@@ -58,10 +63,13 @@
- class LoaderCreatorPolicy(object):
+@@ -96,6 +101,9 @@
      def createQtGuiWrapper(self):
          return _QtGuiWrapper
--    
-+
+     
 +    def createQt3SupportWrapper(self):
 +        return _Qt3SupportWrapper
 +
      def createModuleWrapper(self, moduleName, classes):
          return _ModuleWrapper(moduleName, classes)
--    
-+
-     def createCustomWidgetLoader(self):
-         return _CustomWidgetLoader()
- 
-Index: uic/__init__.py
-===================================================================
---- uic/__init__.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/__init__.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -19,9 +19,10 @@
+     
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/__init__.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/__init__.py
+@@ -56,9 +56,10 @@
  
  
  _pyqt3_wrapper_code = """
@@ -239,11 +181,9 @@ Index: uic/__init__.py
  
  \t\tself.setupUi(self)
  """
-Index: uic/Compiler/compiler.py
-===================================================================
---- uic/Compiler/compiler.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/Compiler/compiler.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -11,7 +11,7 @@
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/Compiler/compiler.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/Compiler/compiler.py
+@@ -52,7 +52,7 @@
  class UICompiler(UIParser):
      def __init__(self):
          UIParser.__init__(self, qtproxies.QtCore, qtproxies.QtGui,
@@ -252,16 +192,16 @@ Index: uic/Compiler/compiler.py
  
      def reset(self):
          qtproxies.i18n_strings = []
-@@ -23,7 +23,7 @@
-     def createToplevelWidget(self, classname, widgetname):
+@@ -65,7 +65,7 @@
          indenter = getIndenter()
          indenter.level = 0
+ 
 -        indenter.write("from PyQt4 import QtCore, QtGui")
 +        indenter.write("from PyQt4 import QtCore, QtGui, Qt3Support")
          indenter.write("")
-         indenter.write("class Ui_%s(object):" % self.uiname)
-         indenter.indent()
-@@ -75,4 +75,7 @@
+ 
+         indenter.write("try:")
+@@ -128,4 +128,7 @@
  
          return {"widgetname": str(w),
                  "uiclass" : w.uiclass,
@@ -270,18 +210,9 @@ Index: uic/Compiler/compiler.py
 +                "baseclassmod" : ("QtGui" if not w.baseclass.startswith("Q3")
 +                                  else "Qt3Support"),
 +                }
-
-Index: uic/Compiler/qtproxies.py
-===================================================================
---- uic/Compiler/qtproxies.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/Compiler/qtproxies.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -335,8 +335,47 @@
- 
-     class QComboBox(QWidget): pass
-     class QFontComboBox(QComboBox): pass
--    
-+
-     # Add all remaining classes.
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/Compiler/qtproxies.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/Compiler/qtproxies.py
+@@ -423,3 +423,42 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -324,12 +255,9 @@ Index: uic/Compiler/qtproxies.py
 +    class Q3DateTimeEditBase(QtGui.QWidget): pass
 +    class Q3DateEdit(Q3DateTimeEditBase): pass
 +    class Q3TimeEdit(Q3DateTimeEditBase): pass
-
-Index: uic/Compiler/qobjectcreator.py
-===================================================================
---- uic/Compiler/qobjectcreator.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
-+++ uic/Compiler/qobjectcreator.py	(.../packages/sip_pyqt/branches/qt-4.5.2/PyQt/pyuic)	(revision 25809)
-@@ -6,7 +6,7 @@
+--- downloads/PyQt-x11-gpl-4.9.1/pyuic/uic/Compiler/qobjectcreator.py
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/pyuic/uic/Compiler/qobjectcreator.py
+@@ -46,7 +46,7 @@
      from sets import Set as set
  
  from PyQt4.uic.Compiler.indenter import write_code
@@ -338,7 +266,7 @@ Index: uic/Compiler/qobjectcreator.py
  
  
  logger = logging.getLogger(__name__)
-@@ -22,6 +22,14 @@
+@@ -62,6 +62,14 @@
  
      search = staticmethod(search)
  
@@ -353,12 +281,7 @@ Index: uic/Compiler/qobjectcreator.py
  
  class _ModuleWrapper(object):
      def __init__(self, name, classes):
-@@ -100,10 +108,13 @@
- class CompilerCreatorPolicy(object):
-     def __init__(self):
-         self._modules = []
--        
-+
+@@ -144,6 +152,9 @@
      def createQtGuiWrapper(self):
          return _QtGuiWrapper
  
@@ -368,5 +291,4 @@ Index: uic/Compiler/qobjectcreator.py
      def createModuleWrapper(self, name, classes):
          mw = _ModuleWrapper(name, classes)
          self._modules.append(mw)
-
 
