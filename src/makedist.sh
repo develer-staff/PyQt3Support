@@ -28,7 +28,7 @@ else
   exit 1
 fi
 
-cd $(dirname $0) && cd ..
+pushd $(dirname $0)/../
 
 [ ! -d ${DOWNLOAD} ] && mkdir $DOWNLOAD
 pushd $DOWNLOAD
@@ -68,27 +68,52 @@ mv PyQt3Support $FDESTDIR
 
 cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 
+function merge_diffs {
+  orig=$1
+  new=$2
+  diff=$3
+  dest=$4
+  extra=${5:-}
+  echo merge_diffs $orig $new $diff $dest $extra
+  patch_opts="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files $extra"
+  local merge=$(patch $patch_opts $new -p3 < $diff 1>&2)
+  # diff exits with 1 if file are different
+  diff_opts="--unified --recursive --new-file --ignore-all-space"
+  echo "diff $diff_opts $orig $new > $dest"
+  local different=$(diff $diff_opts $orig $new | filterdiff --remove-timestamps > $dest; echo $?)
+  if [ "$different" != "0" ]; then
+    # grep exits with 0 if no match is found
+    local conflicts=$(grep --silent "<<<<<<" $dest; echo $?)
+    if [ "$conflicts" == "0" ]; then
+      echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      echo "ERROR: Conflicts in $dest!"
+      echo "Fix conflicts in $new and update the patch with:"
+      echo "  diff $diff_opts $orig $new | filterdiff --remove-timestamps > $diff"
+      echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+      exit 1
+    else
+      echo "Diff file $dest changed, update patch $diff with:"
+      echo "  mv $dest $diff"
+    fi
+  fi
+}
+
 echo "----------------------------------------------------------"
 echo "Patching configure.py..."
 echo "----------------------------------------------------------"
-patch --merge $FDESTDIR/configure.py -p0 <src/configure.diff
+merge_diffs $DOWNLOAD/${PYQT4DIR}/configure.py $FDESTDIR/configure.py src/configure.diff src/configure.diff.${PYQT4VER}
 
 echo "----------------------------------------------------------"
 echo "Patching pyuic..."
 echo "----------------------------------------------------------"
-patch --merge --directory $FDESTDIR/pyuic -p0 <src/pyuic.diff
+merge_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER} --directory
 
+echo "----------------------------------------------------------"
 echo "Building ${FDESTDIR}.tar.gz package..."
+echo "----------------------------------------------------------"
 rm -rf ${FDESTDIR}.tar.gz
 tar -cf ${FDESTDIR}.tar $FDESTDIR
 gzip ${FDESTDIR}.tar
-
-
-echo "Building ${FDESTDIR}.tar.gz package..."
-rm -rf ${FDESTDIR}.tar.gz
-tar -cf ${FDESTDIR}.tar $FDESTDIR
-gzip ${FDESTDIR}.tar
-
 
 
 echo "----------------------------------------------------------"
@@ -122,3 +147,4 @@ echo "----------------------------------------------------------"
 echo "Done!"
 echo "----------------------------------------------------------"
 
+popd
