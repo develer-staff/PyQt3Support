@@ -56,7 +56,7 @@ popd
 echo "----------------------------------------------------------"
 echo "Building the full package..."
 echo "----------------------------------------------------------"
-FDESTDIR=$RELEASE/PyQt3Support-PyQt${PYQT4VER}-${DIST}-${VER}
+FDESTDIR=$RELEASE/PyQt3Support-${VER}-PyQt${PYQT4VER}-${DIST}
 
 rm -rf $FDESTDIR
 
