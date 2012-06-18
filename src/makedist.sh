@@ -12,6 +12,9 @@ RELEASE=release
 
 license=${1:-unset}
 
+DIFF_OPTIONS="--unified --recursive --new-file --ignore-all-space"
+MERGE_OPTIONS="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files"
+
 if [ "$license" = "gpl" ]; then
   DIST=gpl
   REMOTEDIR=http://www.riverbankcomputing.co.uk/static/Downloads
@@ -75,12 +78,10 @@ function merge_diffs {
   dest=$4
   extra=${5:-}
   echo merge_diffs $orig $new $diff $dest $extra
-  patch_opts="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files $extra"
-  local merge=$(patch $patch_opts $new -p3 < $diff 1>&2)
+  patch_opts="$MERGE_OPTIONS $extra"
+  local merge=$(patch $patch_opts $new < $diff 1>&2)
   # diff exits with 1 if file are different
-  diff_opts="--unified --recursive --new-file --ignore-all-space"
-  echo "diff $diff_opts $orig $new > $dest"
-  local different=$(diff $diff_opts $orig $new | filterdiff --remove-timestamps > $dest; echo $?)
+  local different=$(diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps --strip=3 > $dest; echo $?)
   if [ "$different" != "0" ]; then
     # grep exits with 0 if no match is found
     local conflicts=$(grep --silent "<<<<<<" $dest; echo $?)
@@ -88,7 +89,7 @@ function merge_diffs {
       echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       echo "ERROR: Conflicts in $dest!"
       echo "Fix conflicts in $new and update the patch with:"
-      echo "  diff $diff_opts $orig $new | filterdiff --remove-timestamps > $diff"
+      echo "  diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps > $diff"
       echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       exit 1
     else
@@ -124,6 +125,7 @@ PDESTNAME=${FDESTDIR}.patch
 cp $FDESTDIR/PYQT3SUPPORT.TXT $PDESTNAME
 cat src/configure.diff >> $PDESTNAME
 cat src/pyuic.diff >> $PDESTNAME
+diff $DIFF_OPTIONS $DOWNLOAD/${PYQT4DIR}/sip $FDESTDIR/sip | filterdiff --remove-timestamps --strip=3 >> $PDESTNAME
 
 echo "----------------------------------------------------------"
 echo "Building the source package..."
