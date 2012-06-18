@@ -1,14 +1,14 @@
---- ../PyQt-x11-commercial-4.6.1/configure.py	2009-10-23 14:47:53.000000000 +0200
-+++ configure.py	2009-10-28 15:03:20.000000000 +0100
-@@ -327,6 +327,7 @@
+--- downloads/PyQt-x11-gpl-4.9.1/configure.py	2012-02-10 11:35:05.000000000 +0100
++++ release/PyQt3Support-r5-pre-PyQt4.9.1-gpl/configure.py	2012-06-18 11:43:52.996866101 +0200
+@@ -377,6 +377,7 @@
          check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
-         check_module("phonon", "Phonon/VideoWidget",
+         check_module("phonon", "phonon/videowidget.h",
                  "new Phonon::VideoWidget()")
 +        check_module("Qt3Support", "q3painter.h", "new Q3Painter()")
          check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                  extra_libs=ass_libs)
-@@ -457,6 +458,9 @@
+@@ -547,6 +548,9 @@
          if "QAxContainer" in pyqt_modules:
              generate_code("QAxContainer")
  
@@ -18,7 +18,7 @@
          # Generate the composite module.
          qtmod_sipdir = os.path.join("sip", "Qt")
          mk_clean_dir(qtmod_sipdir)
-@@ -1288,6 +1292,11 @@
+@@ -1524,6 +1528,11 @@
      # yet so we make sure we avoid the problem by always releasing the GIL.
      qt_sip_flags.append("-g")
  
@@ -30,7 +30,7 @@
  
  def needed_qt_libs(mname, qt_libs):
      """Add any additional Qt libraries needed by a module to an existing list.
-@@ -1316,6 +1325,7 @@
+@@ -1555,6 +1564,7 @@
          "phonon": ["QtGui"],
          "QtAssistant": ["QtNetwork", "QtGui"],
          "QtDesigner": ["QtGui"],
@@ -38,14 +38,14 @@
          "QAxContainer": ["QtGui"]
      }
  
-@@ -1457,6 +1467,10 @@
-     )
+@@ -1726,6 +1736,10 @@
  
      add_makefile_extras(makefile, extra_include_dirs, extra_lib_dirs, extra_libs)
-+    
+ 
 +    if "Qt3Support" in pyqt_modules:
 +        sipconfig.inform("QT3_SUPPORT defined for the %s module." % mname)
 +        makefile.extra_defines.append("QT3_SUPPORT")
- 
++
      makefile.generate()
+ 
  
