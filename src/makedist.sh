@@ -13,7 +13,7 @@ RELEASE=release
 license=${1:-unset}
 
 DIFF_OPTIONS="--unified --recursive --new-file --ignore-all-space"
-MERGE_OPTIONS="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files"
+PATCH_OPTIONS="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files"
 
 if [ "$license" = "gpl" ]; then
   DIST=gpl
@@ -31,7 +31,7 @@ else
   exit 1
 fi
 
-pushd $(dirname $0)/../
+pushd $(dirname $0)/../ # PyQt3Support root
 
 [ ! -d ${DOWNLOAD} ] && mkdir $DOWNLOAD
 pushd $DOWNLOAD
@@ -52,7 +52,7 @@ if [ $DIST = "gpl" ]; then
 	[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 fi;
 
-popd
+popd # $DOWNLOAD
 
 [ ! -d ${RELEASE} ] && mkdir $RELEASE
 
@@ -71,17 +71,22 @@ mv PyQt3Support $FDESTDIR
 
 cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 
+function filtered_diff {
+  orig=$1
+  new=$2
+  dest=$3
+  diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps --strip=2 > $dest
+}
+
 function merge_diffs {
   orig=$1
   new=$2
   diff=$3
   dest=$4
-  extra=${5:-}
-  echo merge_diffs $orig $new $diff $dest $extra
-  patch_opts="$MERGE_OPTIONS $extra"
-  local merge=$(patch $patch_opts $new < $diff 1>&2)
+  local merge=$(patch -p0 $PATCH_OPTIONS --directory=$FDESTDIR < $diff 1>&2)
+  filtered_diff $orig $new $dest
   # diff exits with 1 if file are different
-  local different=$(diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps --strip=3 > $dest; echo $?)
+  local different=$(diff $dest $diff; echo $?)
   if [ "$different" != "0" ]; then
     # grep exits with 0 if no match is found
     local conflicts=$(grep --silent "<<<<<<" $dest; echo $?)
@@ -89,7 +94,7 @@ function merge_diffs {
       echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       echo "ERROR: Conflicts in $dest!"
       echo "Fix conflicts in $new and update the patch with:"
-      echo "  diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps > $diff"
+      echo "  diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps --strip=2 > $diff"
       echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
       exit 1
     else
@@ -107,7 +112,7 @@ merge_diffs $DOWNLOAD/${PYQT4DIR}/configure.py $FDESTDIR/configure.py src/config
 echo "----------------------------------------------------------"
 echo "Patching pyuic..."
 echo "----------------------------------------------------------"
-merge_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER} --directory
+merge_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER}
 
 echo "----------------------------------------------------------"
 echo "Building ${FDESTDIR}.tar.gz package..."
@@ -125,7 +130,7 @@ PDESTNAME=${FDESTDIR}.patch
 cp $FDESTDIR/PYQT3SUPPORT.TXT $PDESTNAME
 cat src/configure.diff >> $PDESTNAME
 cat src/pyuic.diff >> $PDESTNAME
-diff $DIFF_OPTIONS $DOWNLOAD/${PYQT4DIR}/sip $FDESTDIR/sip | filterdiff --remove-timestamps --strip=3 >> $PDESTNAME
+filtered_diff $DOWNLOAD/${PYQT4DIR}/sip $FDESTDIR/sip $PDESTNAME~ && cat $PDESTNAME~ >> $PDESTNAME && rm $PDESTNAME~
 
 echo "----------------------------------------------------------"
 echo "Building the source package..."
