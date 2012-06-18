@@ -3,3 +3,4 @@ syntax: glob
 PyQt*
 sip*
 package
+tags
