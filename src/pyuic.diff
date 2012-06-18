@@ -147,11 +147,6 @@ Index: uic/uiparser.py
      # overridden.
      def finalize(self):
 
-Property changes on: uic/uiparser.py
-___________________________________________________________________
-Added: svn:eol-style
-   + native
-
 Index: uic/driver.py
 ===================================================================
 --- uic/driver.py	(.../vendor/PyQt3Support/r5-pre-4.5.4/pyuic)	(revision 25809)
