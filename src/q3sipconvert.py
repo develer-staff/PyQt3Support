@@ -354,6 +354,11 @@ class SipFilters:
             line = line.replace("// This is the SIP","%End\n// This is the SIP")
         return line
 
+    @staticmethod
+    def filter_ExportedDoc(line, c=None, filename=""):
+        line = line.replace("%ExportedDoc", "%Extract doc")
+        return line
+
 class SipMerge:
     @staticmethod
     def readtext(filename):
