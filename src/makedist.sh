@@ -78,12 +78,11 @@ function filtered_diff {
   diff $DIFF_OPTIONS $orig $new | filterdiff --remove-timestamps --strip=2 > $dest
 }
 
-function merge_diffs {
+function check_diffs {
   orig=$1
   new=$2
   diff=$3
   dest=$4
-  local merge=$(patch -p0 $PATCH_OPTIONS --directory=$FDESTDIR < $diff 1>&2)
   filtered_diff $orig $new $dest
   # diff exits with 1 if file are different
   local different=$(diff $dest $diff; echo $?)
@@ -102,6 +101,15 @@ function merge_diffs {
       echo "  mv $dest $diff"
     fi
   fi
+}
+
+function merge_diffs {
+  orig=$1
+  new=$2
+  diff=$3
+  dest=$4
+  local merge=$(patch -p0 $PATCH_OPTIONS --directory=$FDESTDIR < $diff 1>&2)
+  check_diffs $orig $new $diff $dest
 }
 
 echo "----------------------------------------------------------"
