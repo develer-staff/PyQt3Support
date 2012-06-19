@@ -1,10 +1,38 @@
 #!/bin/bash
+set -e # exit on error
+set -u # stop on undeclared variable
 
-PYQT=PyQt3Support-PyQt4.4.4-gpl-r5-pre
+PYQT=${1:-none}
+CLEAN=${2:-no}
 
-mkdir build
-pushd $PYQT
-PYTHONPATH=../build python configure.py -c -j3 -b ../build/ -d ../build/ -p ../build/ -n ../build/ -e QtGui -e Qt3Support --confirm-license && make clean && make && make install
+SIP=sip-4.13.2
+
+if [ "$PYQT" == "none" ]; then
+  echo "Usage: $0 PyQt4/PyQt3Supported/sources"
+  exit 1
+fi
+
+mkdir -p build
+BUILD=$(readlink -f build)
+
+wget -c http://www.riverbankcomputing.com/static/Downloads/sip4/$SIP.tar.gz
+[ ! -d $SIP ] && tar zxf $SIP.tar.gz
+pushd $SIP
+python configure.py -b $BUILD -d $BUILD -e $BUILD -v $BUILD
+if [ "$CLEAN" == "clean" ]; then
+  make clean
+fi
+make
+make install
 popd
 
-PYTHONPATH=build python -c "from PyQt4.Qt import *; print dir()"
+pushd $PYQT
+PYTHONPATH=$BUILD python configure.py -c -j3 -b $BUILD -d $BUILD -p $BUILD -n $BUILD -s $BUILD -e QtGui -e Qt3Support --confirm-license
+if [ "$CLEAN" == "clean" ]; then
+  make clean
+fi
+make
+make install
+popd
+
+PYTHONPATH=$BUILD python -c "from PyQt4.Qt import *; print [x for x in dir() if 'Q3' in x]"
