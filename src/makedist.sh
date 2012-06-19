@@ -56,21 +56,6 @@ popd # $DOWNLOAD
 
 [ ! -d ${RELEASE} ] && mkdir $RELEASE
 
-echo "----------------------------------------------------------"
-echo "Building the full package..."
-echo "----------------------------------------------------------"
-FDESTDIR=$RELEASE/PyQt3Support-${VER}-PyQt${PYQT4VER}-${DIST}
-
-rm -rf $FDESTDIR
-
-echo "Merging PyQt3Support methods in PyQt4 sources..."
-src/q3sipconvert.py $DOWNLOAD/${PYQT3DIR} $DOWNLOAD/${PYQT4DIR}
-
-echo "Copying PyQt3Support sources in $FDESTDIR"
-mv PyQt3Support $FDESTDIR
-
-cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
-
 function filtered_diff {
   orig=$1
   new=$2
@@ -83,6 +68,7 @@ function check_diffs {
   new=$2
   diff=$3
   dest=$4
+  mode=${5:-normal}
   filtered_diff $orig $new $dest
   # diff exits with 1 if file are different
   local different=$(diff $dest $diff; echo $?)
@@ -99,6 +85,9 @@ function check_diffs {
     else
       echo "Diff file $dest changed, update patch $diff with:"
       echo "  mv $dest $diff"
+      if [ "$mode" == "strict" ]; then
+        exit 2
+      fi
     fi
   fi
 }
@@ -111,6 +100,25 @@ function merge_diffs {
   local merge=$(patch -p0 $PATCH_OPTIONS --directory=$FDESTDIR < $diff 1>&2)
   check_diffs $orig $new $diff $dest
 }
+
+echo "----------------------------------------------------------"
+echo "Building the full package..."
+echo "----------------------------------------------------------"
+FDESTDIR=$RELEASE/PyQt3Support-${VER}-PyQt${PYQT4VER}-${DIST}
+
+if [ -d "$FDESTDIR" ]; then
+  check_diffs $DOWNLOAD/${PYQT4DIR}/configure.py $FDESTDIR/configure.py src/configure.diff src/configure.diff.${PYQT4VER} strict
+  check_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER} strict
+  rm -rf $FDESTDIR
+fi
+
+echo "Merging PyQt3Support methods in PyQt4 sources..."
+src/q3sipconvert.py $DOWNLOAD/${PYQT3DIR} $DOWNLOAD/${PYQT4DIR}
+
+echo "Copying PyQt3Support sources in $FDESTDIR"
+mv PyQt3Support $FDESTDIR
+
+cp README.TXT $FDESTDIR/PYQT3SUPPORT.TXT
 
 echo "----------------------------------------------------------"
 echo "Patching configure.py..."
