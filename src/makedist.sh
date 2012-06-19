@@ -11,6 +11,7 @@ DOWNLOAD=downloads
 RELEASE=release
 
 license=${1:-unset}
+action=${2:-build}
 
 DIFF_OPTIONS="--unified --recursive --new-file --ignore-all-space"
 PATCH_OPTIONS="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files"
@@ -107,8 +108,10 @@ echo "----------------------------------------------------------"
 FDESTDIR=$RELEASE/PyQt3Support-${VER}-PyQt${PYQT4VER}-${DIST}
 
 if [ -d "$FDESTDIR" ]; then
-  check_diffs $DOWNLOAD/${PYQT4DIR}/configure.py $FDESTDIR/configure.py src/configure.diff src/configure.diff.${PYQT4VER} strict
-  check_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER} strict
+  if [ "$action" != "clean" ]; then
+    check_diffs $DOWNLOAD/${PYQT4DIR}/configure.py $FDESTDIR/configure.py src/configure.diff src/configure.diff.${PYQT4VER} strict
+    check_diffs $DOWNLOAD/${PYQT4DIR}/pyuic $FDESTDIR/pyuic src/pyuic.diff src/pyuic.diff.${PYQT4VER} strict
+  fi
   rm -rf $FDESTDIR
 fi
 
