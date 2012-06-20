@@ -117,7 +117,8 @@
 -        if e.args[0].startswith("Q3"):
 -            sys.stderr.write("Error: Q3Support widgets are not supported by PyQt4.\n")
 -        else:
-             sys.stderr.write(str(e) + "\n")
+-            sys.stderr.write(str(e) + "\n")
++        sys.stderr.write(str(e) + "\n")
  
      def on_Exception(self, e):
 --- pyuic/uic/__init__.py
