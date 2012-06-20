@@ -27,7 +27,7 @@ make install
 popd
 
 pushd $PYQT
-PYTHONPATH=$BUILD python configure.py -c -j3 -b $BUILD -d $BUILD -p $BUILD -n $BUILD -s $BUILD -e QtGui -e Qt3Support --confirm-license
+PYTHONPATH=$BUILD python configure.py -q /usr/bin/qmake-qt4 -c -j3 -b $BUILD -d $BUILD -p $BUILD -n $BUILD -s $BUILD -e QtGui -e Qt3Support --confirm-license
 if [ "$CLEAN" == "clean" ]; then
   make clean
 fi
