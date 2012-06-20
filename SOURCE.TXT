@@ -1,6 +1,12 @@
+== SDK developement ==
+
+Prereq:
+ - filterdiff: sudo apt-get install patchutils
+ - yacc, lex: sudo apt-get install bison flex
+
 Once unpacked this package, execute
 
-$ src/makedist.sh
+$ src/makedist.sh (gpl|commercial) [clean]
 
 It will:
 
