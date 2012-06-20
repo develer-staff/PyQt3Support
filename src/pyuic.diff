@@ -122,6 +122,15 @@
      def on_Exception(self, e):
 --- pyuic/uic/__init__.py
 +++ pyuic/uic/__init__.py
+@@ -48,7 +48,7 @@
+ # Form implementation generated from reading ui file '%s'
+ #
+ # Created: %s
+-#      by: PyQt4 UI code generator %s
++#      by: PyQt4+Qt3Support UI code generator %s
+ #
+ # WARNING! All changes made in this file will be lost!
+ 
 @@ -56,9 +56,10 @@
  
  
