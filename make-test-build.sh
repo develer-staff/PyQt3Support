@@ -5,7 +5,7 @@ set -u # stop on undeclared variable
 PYQT=${1:-none}
 CLEAN=${2:-no}
 
-SIP=sip-4.13.2
+SIP=sip-4.13.3
 
 if [ "$PYQT" == "none" ]; then
   echo "Usage: $0 PyQt4/PyQt3Supported/sources"
