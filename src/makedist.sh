@@ -13,7 +13,7 @@ RELEASE=release
 license=${1:-unset}
 action=${2:-build}
 
-DIFF_OPTIONS="--unified --recursive --new-file --ignore-trailing-space"
+DIFF_OPTIONS="--unified --recursive --new-file --ignore-trailing-space --exclude=Makefile --exclude=pyuic4"
 PATCH_OPTIONS="--no-backup-if-mismatch --merge --ignore-whitespace --remove-empty-files"
 
 if [ "$license" = "gpl" ]; then
