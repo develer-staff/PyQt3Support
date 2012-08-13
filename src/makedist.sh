@@ -43,7 +43,7 @@ echo "=========================================================="
 
 if [ $DIST = "gpl" ]; then
 	echo "----------------------------------------------------------"
-	echo "Downloading PyQt4, PyQt3 and sip sources..."
+	echo "Downloading PyQt4 and PyQt3 sources..."
 	echo "----------------------------------------------------------"
 
 	wget -c ${REMOTEDIR}/PyQt4/${PYQT4DIR}.tar.gz
