@@ -131,7 +131,7 @@ If you need some help, feel free to mail us at <pyqt3support@develer.com>
 
 Or use:
 {{{
-hg clone static-http://www.develer.com/~naufraghi/PyQt3Support/hg PyQt3Support.hg
+git clone git://src.develer.com/users/naufraghi/PyQt3Support.git PyQt3Support.git
 }}}
 
 
