@@ -1,15 +1,15 @@
 --- configure.py
 +++ configure.py
-@@ -377,6 +377,8 @@
-         check_module("QtXmlPatterns", "qxmlname.h", "new QXmlName()")
-         check_module("phonon", "phonon/videowidget.h",
-                 "new Phonon::VideoWidget()")
-+        check_module("Qt3Support", "Qt3Support/q3painter.h", "new Q3Painter()",
-+                extra_libs=["QtGui"])
-         check_module("QtAssistant", "qassistantclient.h",
+@@ -385,6 +385,8 @@
+         if qt_version < 0x050000: check_module("QtAssistant", "qassistantclient.h",
                  "new QAssistantClient(\"foo\")", extra_lib_dirs=ass_lib_dirs,
                  extra_libs=ass_libs)
-@@ -547,6 +549,9 @@
++        check_module("Qt3Support", "Qt3Support/q3painter.h", "new Q3Painter()",
++                extra_libs=["QtGui"])
+ 
+         if not qt_shared:
+             sipconfig.inform("QtDesigner module disabled with static Qt libraries.")
+@@ -552,6 +554,9 @@
          if "QAxContainer" in pyqt_modules:
              generate_code("QAxContainer")
  
@@ -19,7 +19,7 @@
          # Generate the composite module.
          qtmod_sipdir = os.path.join("sip", "Qt")
          mk_clean_dir(qtmod_sipdir)
-@@ -1434,12 +1439,19 @@
+@@ -1447,12 +1452,19 @@
      if len(opts.enabled) > 0 and mname not in opts.enabled:
          return
  
@@ -39,7 +39,7 @@
  
  
  def check_api(incfile, test, mname, extra_include_dirs=None, extra_lib_dirs=None, extra_libs=None):
-@@ -1524,6 +1536,11 @@
+@@ -1537,6 +1549,11 @@
      # yet so we make sure we avoid the problem by always releasing the GIL.
      qt_sip_flags.append("-g")
  
@@ -51,7 +51,7 @@
  
  def needed_qt_libs(mname, qt_libs):
      """Add any additional Qt libraries needed by a module to an existing list.
-@@ -1555,6 +1572,7 @@
+@@ -1568,6 +1585,7 @@
          "phonon": ["QtGui"],
          "QtAssistant": ["QtNetwork", "QtGui"],
          "QtDesigner": ["QtGui"],
@@ -59,7 +59,7 @@
          "QAxContainer": ["QtGui"]
      }
  
-@@ -1726,6 +1744,10 @@
+@@ -1739,6 +1757,10 @@
  
      add_makefile_extras(makefile, extra_include_dirs, extra_lib_dirs, extra_libs)
  
