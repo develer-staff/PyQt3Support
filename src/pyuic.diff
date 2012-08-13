@@ -65,7 +65,7 @@
          self._modules.append(mw)
 --- pyuic/uic/Compiler/qtproxies.py
 +++ pyuic/uic/Compiler/qtproxies.py
-@@ -425,3 +425,45 @@
+@@ -425,3 +425,48 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -88,7 +88,10 @@
 +    class Q3VBox(Q3HBox): pass
 +    class Q3WidgetStack(Q3Frame): pass
 +    class Q3ScrollView(Q3Frame): pass
-+    class Q3ListView(Q3ScrollView): pass
++    class Q3ListView(Q3ScrollView):
++        def header(self):
++            return Qt3Support.Q3Header("%s.header()" % (self),
++                    False, (), noInstantiation=True)
 +    class Q3Table(Q3ScrollView):
 +        def horizontalHeader(self):
 +            return Qt3Support.Q3Header("%s.horizontalHeader()" % (self),
@@ -264,7 +267,7 @@
              self.item_nr += 1
  
      def addAction(self, elem):
-@@ -716,6 +722,31 @@
+@@ -716,6 +722,43 @@
                      w.setVerticalHeaderItem(self.row_counter, item)
                      self.row_counter += 1
  
@@ -290,13 +293,25 @@
 +
 +                self.row_counter += 1
 +
++        elif isinstance(w, Qt3Support.Q3ListView):
++            if len(elem) == 0:
++                return
++
++            text = self.wprops.getProperty(elem, "text")
++            icon = self.wprops.getProperty(elem, "icon")
++            if icon:
++                w.header().setLabel(self.column_counter, icon, text)
++            else:
++                w.header().setLabel(self.column_counter, text)
++            self.row_counter += 1
++
 +        else:
 +            raise NotImplementedError("addHeader() for %s" % type(w).__name__)
 +
      def createAction(self, elem):
          self.setupObject("QAction", self.currentActionGroup or self.toplevelWidget,
                           elem)
-@@ -888,8 +919,6 @@
+@@ -888,8 +931,6 @@
      
          for custom_widget in iter(elem):
              classname = custom_widget.findtext("class")
