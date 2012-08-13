@@ -4,7 +4,7 @@ Prereq:
  - filterdiff: sudo apt-get install patchutils
  - yacc, lex: sudo apt-get install bison flex
 
-Once unpacked this package, execute
+Once unpacked this package, execute:
 
 $ src/makedist.sh (gpl|commercial) [clean]
 
