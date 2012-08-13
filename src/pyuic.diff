@@ -65,7 +65,7 @@
          self._modules.append(mw)
 --- pyuic/uic/Compiler/qtproxies.py
 +++ pyuic/uic/Compiler/qtproxies.py
-@@ -425,3 +425,43 @@
+@@ -425,3 +425,45 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -86,6 +86,7 @@
 +    class Q3Grid(Q3Frame): pass
 +    class Q3HBox(Q3Frame): pass
 +    class Q3VBox(Q3HBox): pass
++    class Q3WidgetStack(Q3Frame): pass
 +    class Q3ScrollView(Q3Frame): pass
 +    class Q3ListView(Q3ScrollView): pass
 +    class Q3Table(Q3ScrollView):
@@ -98,6 +99,7 @@
 +
 +    class Q3ListBox(Q3ScrollView): pass
 +    class Q3TextEdit(Q3ScrollView): pass
++    class Q3TextBrowser(Q3TextEdit): pass
 +
 +    class Q3MainWindow(QtGui.QWidget): pass
 +    class Q3PopupMenu(QtGui.QWidget): pass
