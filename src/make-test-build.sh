@@ -2,19 +2,24 @@
 set -e # exit on error
 set -u # stop on undeclared variable
 
-PYQT=${1:-none}
+PYQT=${1:-false}
 CLEAN=${2:-no}
 
 SIP=sip-4.13.3
 
-if [ "$PYQT" == "none" ]; then
-  echo "Usage: $0 PyQt4/PyQt3Supported/sources"
+if [ ! -d "$PYQT" ]; then
+  echo "Usage: $0 PyQt4/PyQt3Supported/sources [clean]"
   exit 1
 fi
+
+PYQT=$(readlink -f $PYQT)
+cd $(dirname $(readlink -f $0))/../
 
 mkdir -p build
 BUILD=$(readlink -f build)
 
+mkdir -p downloads
+pushd downloads
 wget -c http://www.riverbankcomputing.com/static/Downloads/sip4/$SIP.tar.gz
 [ ! -d $SIP ] && tar zxf $SIP.tar.gz
 pushd $SIP
@@ -24,6 +29,7 @@ if [ "$CLEAN" == "clean" ]; then
 fi
 make
 make install
+popd
 popd
 
 pushd $PYQT
