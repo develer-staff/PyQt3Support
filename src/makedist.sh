@@ -157,7 +157,7 @@ echo "----------------------------------------------------------"
 SDK=PyQt3Support_sdk_${SDKVER}
 
 rm -rf /tmp/${SDK}
-hg clone ./ /tmp/${SDK}
+git clone ./ /tmp/${SDK}
 pushd /tmp
 tar -cf ${SDK}.tar ${SDK}
 gzip ${SDK}.tar
