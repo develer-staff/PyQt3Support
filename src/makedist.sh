@@ -46,10 +46,10 @@ if [ $DIST = "gpl" ]; then
 	echo "Downloading PyQt4 and PyQt3 sources..."
 	echo "----------------------------------------------------------"
 
-	wget -c ${REMOTEDIR}/PyQt4/${PYQT4DIR}.tar.gz
+	[ ! -e ${PYQT4DIR}.tar.gz ] && wget -c ${REMOTEDIR}/PyQt4/${PYQT4DIR}.tar.gz
 	[ ! -d ${PYQT4DIR} ] && tar zxf ${PYQT4DIR}.tar.gz
 
-	wget -c ${REMOTEDIR}/PyQt3/${PYQT3DIR}.tar.gz
+	[ ! -e ${PYQT3DIR}.tar.gz ] && wget -c ${REMOTEDIR}/PyQt3/${PYQT3DIR}.tar.gz
 	[ ! -d ${PYQT3DIR} ] && tar zxf ${PYQT3DIR}.tar.gz
 fi;
 
