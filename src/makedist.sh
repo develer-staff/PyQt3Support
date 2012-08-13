@@ -4,7 +4,7 @@ set -u # stop on undeclared variable
 
 VER=r5-pre
 SDKVER=0.7-pre
-PYQT4VER=4.9.1
+PYQT4VER=4.9.4
 PYQT3VER=3.18.1
 
 DOWNLOAD=downloads
