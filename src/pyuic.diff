@@ -65,7 +65,7 @@
          self._modules.append(mw)
 --- pyuic/uic/Compiler/qtproxies.py
 +++ pyuic/uic/Compiler/qtproxies.py
-@@ -425,3 +425,42 @@
+@@ -425,3 +425,43 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -104,6 +104,7 @@
 +    class Q3StyleSheet(QtCore.QObject): pass
 +
 +    class Q3GroupBox(QtGui.QGroupBox): pass
++    class Q3ButtonGroup(Q3GroupBox): pass
 +
 +    class Q3DateTimeEditBase(QtGui.QWidget): pass
 +    class Q3DateEdit(Q3DateTimeEditBase): pass
