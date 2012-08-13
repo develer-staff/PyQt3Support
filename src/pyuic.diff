@@ -65,7 +65,7 @@
          self._modules.append(mw)
 --- pyuic/uic/Compiler/qtproxies.py
 +++ pyuic/uic/Compiler/qtproxies.py
-@@ -423,3 +423,42 @@
+@@ -425,3 +425,42 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -110,7 +110,7 @@
 +    class Q3TimeEdit(Q3DateTimeEditBase): pass
 --- pyuic/uic/driver.py
 +++ pyuic/uic/driver.py
-@@ -110,9 +110,6 @@
+@@ -110,10 +110,7 @@
      def on_NoSuchWidgetError(self, e):
          """ Handle a NoSuchWidgetError exception. """
  
@@ -121,6 +121,7 @@
 +        sys.stderr.write(str(e) + "\n")
  
      def on_Exception(self, e):
+         """ Handle a generic exception. """
 --- pyuic/uic/__init__.py
 +++ pyuic/uic/__init__.py
 @@ -48,7 +48,7 @@
@@ -168,7 +169,7 @@
  class _ModuleWrapper(object):
      def __init__(self, moduleName, classes):
          self._moduleName = moduleName
-@@ -96,6 +101,9 @@
+@@ -121,6 +126,9 @@
      def createQtGuiWrapper(self):
          return _QtGuiWrapper
      
