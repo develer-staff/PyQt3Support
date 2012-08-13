@@ -65,7 +65,7 @@
          self._modules.append(mw)
 --- pyuic/uic/Compiler/qtproxies.py
 +++ pyuic/uic/Compiler/qtproxies.py
-@@ -425,3 +425,48 @@
+@@ -425,3 +425,51 @@
      for _class in _qwidgets:
          if _class not in locals():
              locals()[_class] = type(_class, (QWidget, ), {})
@@ -114,6 +114,9 @@
 +    class Q3DateTimeEditBase(QtGui.QWidget): pass
 +    class Q3DateEdit(Q3DateTimeEditBase): pass
 +    class Q3TimeEdit(Q3DateTimeEditBase): pass
++    class Q3DateTimeEdit(Q3DateTimeEditBase): pass
++
++    class Q3ProgressBar(QtGui.QFrame): pass
 --- pyuic/uic/driver.py
 +++ pyuic/uic/driver.py
 @@ -110,10 +110,7 @@
