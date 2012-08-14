@@ -9,6 +9,7 @@
             {sipName_Q3Action,             &sipClass_Q3Action,                3,  4}, //  2
                 {sipName_Q3ActionGroup,        &sipClass_Q3ActionGroup,      -1, -1}, //  3
             {sipName_Q3DockArea,           &sipClass_Q3DockArea,             -1,  5}, //  4
+
             {sipName_Q3Frame,                  &sipClass_Q3Frame,             6, 15}, //  5
                 {sipName_Q3DockWindow,             &sipClass_Q3DockWindow,    7,  8}, //  6
                     {sipName_Q3ToolBar,                &sipClass_Q3ToolBar,  -1, -1}, //  7
@@ -19,10 +20,15 @@
                     {sipName_Q3ListView,       &sipClass_Q3ListView,         -1, 13}, // 12
                     {sipName_Q3Table,          &sipClass_Q3Table,            -1, 14}, // 13
                     {sipName_Q3ListBox,        &sipClass_Q3ListBox,          -1, 15}, // 14
-            {sipName_Q3MainWindow,         &sipClass_Q3MainWindow,           -1, 16}, // 15
-            {sipName_Q3PopupMenu,          &sipClass_Q3PopupMenu,            -1, 17}, // 16
-            {sipName_Q3StyleSheet,         &sipClass_Q3StyleSheet,           -1, 18}, // 17
-            {sipName_Q3GroupBox,           &sipClass_Q3GroupBox,             -1, -1}, // 18
+                    {sipName_Q3TextEdit,       &sipClass_Q3TextEdit,         16, 17}, // 15
+                        {sipName_Q3TextBrowser,    &sipClass_Q3TextBrowser,  -1, -1}, // 16
+                {sipName_Q3WidgetStack,    &sipClass_Q3WidgetStack,          -1, 18}, // 17
+
+            {sipName_Q3MainWindow,         &sipClass_Q3MainWindow,           -1, 19}, // 18
+            {sipName_Q3PopupMenu,          &sipClass_Q3PopupMenu,            -1, 20}, // 19
+            {sipName_Q3StyleSheet,         &sipClass_Q3StyleSheet,           -1, 21}, // 20
+            {sipName_Q3GroupBox,           &sipClass_Q3GroupBox,             22, -1}, // 21
+                {sipName_Q3ButtonGroup,        &sipClass_Q3ButtonGroup       -1, -1}, // 22
         };
 
         int i = 0;
