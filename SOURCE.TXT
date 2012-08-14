@@ -18,20 +18,22 @@ It will:
    Qt3Support module.
 
   * create a Qt3Support module containing the PyQt3 ported classes:
-    Q3VBox, Q3HBox, Q3Frame, Q3Grid, Q3Accel, Q3PopupMenu, Q3MenuData,
-    Q3DockWindow, Q3DockArea, Q3ListView, Q3ScrollView, Q3ColorGroup,
-    Q3Header, Q3ListBox, Q3StrList, Q3Table, Q3MemArray, Q3MainWindow,
-    Q3ToolBar, Q3Action, Q3SimpleRichText, Q3StyleSheet, Q3Mime, Q3ComboBox,
-    Q3GroupBox, Q3FileDialog, Q3Url, Q3WidgetStack, Q3HGroupBox, Q3VGroupBox,
-    Q3IconView, Q3DragObject, Q3Picture, Q3ValueList, Q3CString,
-    Q3ButtonGroup, Q3VButtonGroup
+    Q3Accel, Q3Action, Q3ButtonGroup, Q3CString, Q3ColorGroup, Q3ComboBox,
+    Q3DateTimeEdit, Q3DockArea, Q3DockWindow, Q3DragObject, Q3FileDialog, Q3Frame,
+    Q3Grid, Q3GroupBox, Q3HBox, Q3HGroupBox, Q3Header, Q3IconView, Q3ListBox,
+    Q3ListView, Q3MainWindow, Q3MemArray, Q3MenuData, Q3Mime, Q3Picture,
+    Q3PopupMenu, Q3ProgressBar, Q3ScrollView, Q3SimpleRichText, Q3StrList,
+    Q3StyleSheet, Q3SyntaxHighlighter, Q3Table, Q3TextBrowser, Q3TextEdit,
+    Q3ToolBar, Q3Url, Q3VBox, Q3VButtonGroup, Q3VGroupBox, Q3ValueList,
+    Q3WidgetStack
 
   * add the some methods to PyQt4 qt3supported classes:
-    Gui.QBoxLayout, Core.QNamespace, Gui.QLCDNumber, Gui.QGridLayout,
-    Gui.QApplication, Gui.QPushButton, OpenGL.QGLWidget, Core.QObject,
-    Gui.QLabel, Gui.QPixmap, Core.QTextCodec, Gui.QToolButton, Gui.QTabWidget,
-    Gui.QMenu, Core.QTimer, Gui.QLayout, Gui.QPalette, Gui.QMenuBar,
-    Gui.QLineEdit, Gui.QDialog, Gui.QInputDialog, Gui.QCheckBox,
-    Gui.QWidget, Gui.QTextEdit, Gui.QEvent, Gui.QSlider
+    Core.QNamespace, Core.QObject, Core.QTextCodec, Core.QTimer, Gui.QApplication,
+    Gui.QBoxLayout, Gui.QCheckBox, Gui.QDialog, Gui.QEvent, Gui.QGridLayout,
+    Gui.QInputDialog, Gui.QLCDNumber, Gui.QLabel, Gui.QLayout, Gui.QLineEdit,
+    Gui.QMenu, Gui.QMenuBar, Gui.QPalette, Gui.QPixmap, Gui.QPushButton,
+    Gui.QSlider, Gui.QTabWidget, Gui.QTextEdit, Gui.QToolButton, Gui.QWidget,
+    OpenGL.QGLWidget
 
  * Build the two ''full'' and ''addon'' packages.
+

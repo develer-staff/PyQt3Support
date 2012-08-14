@@ -585,8 +585,8 @@ if __name__ == "__main__":
             report['Qt3'].append("Q3%s" % qclass.split("/")[1])
         for qclass in q4classes:
             report['Qt4'].append("%s.Q%s" % tuple(qclass.split("/")))
-        print "PyQt3 ported classes:\n%s" % ", ".join(report['Qt3'])
-        print "PyQt4 qt3supported classes:\n%s" % ", ".join(report['Qt4'])
+        print "PyQt3 ported classes:\n%s" % ", ".join(sorted(report['Qt3']))
+        print "PyQt4 qt3supported classes:\n%s" % ", ".join(sorted(report['Qt4']))
         sys.exit(0)
     elif len(args) == 2:
         pyqt3base = "../%s/" % args[0]
