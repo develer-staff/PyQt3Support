@@ -20,7 +20,7 @@ BUILD=$(readlink -f build)
 
 mkdir -p downloads
 pushd downloads
-wget -c http://www.riverbankcomputing.com/static/Downloads/sip4/$SIP.tar.gz
+[ ! -e $SIP.tar.gz ] && wget -c http://www.riverbankcomputing.com/static/Downloads/sip4/$SIP.tar.gz
 [ ! -d $SIP ] && tar zxf $SIP.tar.gz
 pushd $SIP
 python configure.py -b $BUILD -d $BUILD -e $BUILD -v $BUILD
