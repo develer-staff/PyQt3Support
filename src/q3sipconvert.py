@@ -295,6 +295,10 @@ class SipFilters:
             line = line.replace("Q3Frame", "QFrame")
             line = line.replace("void drawContents(QPainter *);",
                                 "//void drawContents(QPainter *);")
+            line = line.replace("void setIndicatorFollowsStyle(bool);",
+                                "//void setIndicatorFollowsStyle(bool);")
+            line = line.replace("bool indicatorFollowsStyle() const;",
+                                "//bool indicatorFollowsStyle() const;")
         elif "filedialog" in filename:
             line = line.replace("QButton", "QAbstractButton")
             if "Q3UrlOperator" in line:
