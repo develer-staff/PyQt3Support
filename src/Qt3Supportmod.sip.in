@@ -16,7 +16,7 @@
 
 %%Features%%
 
-%Module PyQt4.Qt3Support 0
+%Module(name=PyQt4.Qt3Support, version=0)
 
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
