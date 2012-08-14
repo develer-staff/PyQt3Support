@@ -134,13 +134,14 @@ q4classes = {# Class:          [(Anchor, method/enum/typedef),]
             }
 
 q3classes = """qt/VBox qt/HBox qt/Frame qt/Grid qt/Accel qt/PopupMenu qt/MenuData
-               qt/DockWindow qt/DockArea qt/ListView qt/ScrollView
+               qt/DockWindow qt/DockArea qt/ListView qt/ScrollView qt/TextBrowser
                qt/ColorGroup qt/Header qt/ListBox qt/StrList qttable/Table
                qt/MemArray qt/MainWindow qt/ToolBar qt/Action qt/SimpleRichText
                qt/StyleSheet qt/Mime qt/ComboBox qt/GroupBox qt/FileDialog
                qt/Url qt/WidgetStack qt/HGroupBox qt/VGroupBox qt/IconView
                qt/DragObject qt/Picture qt/ValueList qt/CString qt/ButtonGroup
-               qt/VButtonGroup qt/TextEdit qt/DateTimeEdit qt/SyntaxHighlighter""".split()
+               qt/VButtonGroup qt/TextEdit qt/DateTimeEdit qt/SyntaxHighlighter
+               qt/ProgressBar""".split()
 assert len(q3classes) == len(set(q3classes)), (len(q3classes), len(set(q3classes)))
 
 getCompatCode = re.compile("%If\ [\(\ ]*.*-.*Qt[^%]*%End\n*")
@@ -290,6 +291,10 @@ class SipFilters:
         elif "groupbox" in filename:
             line = line.replace("class Q3GroupBox : Q3Frame",
                                 "class Q3GroupBox : QGroupBox")
+        elif "progressbar" in filename:
+            line = line.replace("Q3Frame", "QFrame")
+            line = line.replace("void drawContents(QPainter *);",
+                                "//void drawContents(QPainter *);")
         elif "filedialog" in filename:
             line = line.replace("QButton", "QAbstractButton")
             if "Q3UrlOperator" in line:
