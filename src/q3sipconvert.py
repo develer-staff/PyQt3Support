@@ -416,7 +416,7 @@ class SipMerge:
         line = line.replace("Layout(int = -1",
                             "Layout(int")
         if "}" not in line and "typedef" not in line:
-            line = line.replace(";", " / Deprecated / ;")
+            line = line.replace(";", " /Deprecated/;")
         return line
 
     @staticmethod
