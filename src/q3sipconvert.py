@@ -52,7 +52,10 @@ modulename = "Qt3Supportmod.sip"
 
 q4classes = {# Class:          [(Anchor, method/enum/typedef),]
             "Gui/Application": [("static QStyle *setStyle(const QString &);",
-                                 "virtual void setMainWidget")],
+                                 "virtual void setMainWidget"),
+                                ("static QStyle *setStyle(const QString &);",
+                                 "QWidget *mainWidget"),
+                                ],
             "Gui/Label": [],
             "Gui/PushButton": [("virtual ~QPushButton();", "virtual void setOn"),
                                ("virtual ~QPushButton();", "bool isOn() const;"),
