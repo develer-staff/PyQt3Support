@@ -70,7 +70,9 @@ function check_diffs {
   diff=$3
   dest=$4
   mode=${5:-normal}
+  if [ "0 $diff" == "$(wc -l $diff)" ]; then echo "WARNING: $diff file is empty"; fi
   filtered_diff $orig $new $dest
+  if [ "0 $dest" == "$(wc -l $dest)" ]; then echo "WARNING: $dest file is empty"; fi
   # diff exits with 1 if file are different
   local different=$(diff $dest $diff; echo $?)
   if [ "$different" != "0" ]; then
