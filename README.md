@@ -56,7 +56,7 @@ If you have a commercial license and you are *very* paranoid, you probably want 
 
 ### Status
 
-PyQt3Support is not complete: it binds about 30% of the Qt3Support, but don't be fooled by this figure: it's the part that is probably used most in existing programs (more common widgets, constructors, ecc.). A full list is available here: [[Status List]].
+PyQt3Support is not complete: it binds about 30% of the Qt3Support, but don't be fooled by this figure: it's the part that is probably used most in existing programs (more common widgets, constructors, ecc.). A full list is available here: [Status List](https://github.com/develersrl/PyQt3Support/wiki/Status-List).
 
 Moreover, since it is fully machine-generated, it is very easy to extend it to cover more classes and functions. See below as per how to contribute to the development.
 
