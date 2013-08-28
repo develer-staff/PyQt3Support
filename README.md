@@ -67,7 +67,9 @@ The `Deprecated` annotation raises a [Python Warning](http://docs.python.org/lib
 
 You can filter the warning flood with the standard python machinery:
 
-    warnings.simplefilter('ignore', DeprecationWarning)
+```python
+warnings.simplefilter('ignore', DeprecationWarning)
+```
 
 To use PyQt3Support you need at least a SIP snapshot containing the `/Deprecated/` patch or a release >= 4.7.8.
 
