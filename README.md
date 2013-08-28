@@ -84,7 +84,7 @@ For professionals, commercial support is also available through our employer, [D
 ### Authors
 
  * Matteo Bertini <naufraghi@develer.com>
- * Lorenzo Berni <duplo@develer.com> (PyQt 4.4.3 upgrade, / Deprecated / sip dupport)
+ * Lorenzo Berni <duplo@develer.com> (PyQt 4.4.3 upgrade, `/Deprecated/` sip support)
 
 
 ### Development
